@@ -1,0 +1,116 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-service
+  namespace: todo-list
+  labels:
+    app: keys-service
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: api-service
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 5
+      maxUnavailable: 1
+  template:
+    metadata:
+      labels:
+        app: api-service
+    spec:
+      imagePullSecrets:
+        - name: docker-registry-secret
+      containers:
+        - name: api-service
+          image: containers.chewed-k8s.net/todo-list/api:latest
+          imagePullPolicy: Always
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 80
+          ports:
+            - containerPort: 80
+            - containerPort: 3000
+          env:
+            - name: VAULT_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: api-secrets
+                  key: vault-token
+            - name: MONGO_ACCOUNT_COLLECTION
+              valueFrom:
+                secretKeyRef:
+                  name: api-secrets
+                  key: mongo-account-collection
+            - name: MONGO_LIST_COLLECTION
+              valueFrom:
+                secretKeyRef:
+                  name: api-secrets
+                  key: mongo-list-collection
+            - name: MONGO_DB
+              valueFrom:
+                secretKeyRef:
+                  name: api-secrets
+                  key: mongo-db
+            - name: MONGO_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: api-secrets
+                  key: mongo-host
+            - name: MONGO_VAULT_PATH
+              valueFrom:
+                secretKeyRef:
+                  name: api-secrets
+                  key: mongo-vault-path
+            - name: VAULT_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: api-secrets
+                  key: vault-host
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: api-service
+  namespace: todo-list
+  labels:
+    app: api-service
+spec:
+  ports:
+    - port: 3000
+      protocol: TCP
+      targetPort: 80
+  selector:
+    app: api-service
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: api-service
+  namespace: todo-list
+  annotations:
+    cert-manager.io/cluster-issuer: live-issuer
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+  labels:
+    app: api-service
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - api.todo-list.app
+      secretName: api-service-tls
+  rules:
+    - host: api.todo-list.app
+      http:
+        paths:
+          - path: /v1(/|$)(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: api-service
+                port:
+                  number: 3000

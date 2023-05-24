@@ -1,3 +1,4 @@
+// Package config is used to build the configuration for the service.
 package config
 
 import (
@@ -5,12 +6,14 @@ import (
 	env "github.com/caarlos0/env/v8"
 )
 
+// Config is the main config
 type Config struct {
 	Local
 	Mongo
 	Vault
 }
 
+// Build is used to build the config, it will call BuildVault and BuildMongo
 func Build() (*Config, error) {
 	cfg := &Config{}
 

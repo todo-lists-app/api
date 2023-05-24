@@ -2,10 +2,12 @@ package config
 
 import (
 	"fmt"
-	env "github.com/caarlos0/env/v8"
 	"strings"
+
+	env "github.com/caarlos0/env/v8"
 )
 
+// Vault is the vault config
 type Vault struct {
 	Host    string `env:"VAULT_HOST" envDefault:"localhost"`
 	Port    string `env:"VAULT_PORT" envDefault:""`
@@ -13,6 +15,7 @@ type Vault struct {
 	Address string `env:"VAULT_ADDRESS" envDefault:""`
 }
 
+// BuildVault builds the vault config
 func BuildVault(cfg *Config) error {
 	v := &Vault{}
 

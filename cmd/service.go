@@ -1,16 +1,21 @@
+// Package main run the app
 package main
 
 import (
 	"fmt"
+
 	"github.com/bugfixes/go-bugfixes/logs"
 	"github.com/todo-lists-app/todo-lists-api/internal/config"
 	"github.com/todo-lists-app/todo-lists-api/internal/service"
 )
 
 var (
+	// BuildVersion is the version of the app
 	BuildVersion = "dev"
-	BuildHash    = "unknown"
-	ServiceName  = "base-service"
+	// BuildHash is the git-hash of the app
+	BuildHash = "unknown"
+	// ServiceName is the name of the service
+	ServiceName = "base-service"
 )
 
 func main() {

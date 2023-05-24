@@ -3,6 +3,9 @@ package service
 import (
 	"encoding/json"
 	"fmt"
+	"net/http"
+	"time"
+
 	"github.com/bugfixes/go-bugfixes/logs"
 	chi "github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
@@ -11,14 +14,14 @@ import (
 	probe "github.com/keloran/go-probe"
 	"github.com/todo-lists-app/todo-lists-api/internal/api"
 	"github.com/todo-lists-app/todo-lists-api/internal/config"
-	"net/http"
-	"time"
 )
 
+// Service is the service
 type Service struct {
 	Config *config.Config
 }
 
+// Start the service
 func (s *Service) Start() error {
 	errChan := make(chan error)
 
@@ -27,33 +30,7 @@ func (s *Service) Start() error {
 	return <-errChan
 }
 
-func NoLists(w http.ResponseWriter) error {
-	type NoList struct {
-		Message string       `json:"message"`
-		Data    api.TodoList `json:"data"`
-	}
-
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
-	return json.NewEncoder(w).Encode(NoList{
-		Message: "No Lists",
-		Data:    api.TodoList{},
-	})
-}
-
-func ListExists(w http.ResponseWriter, l *api.TodoList) error {
-	type List struct {
-		Message string       `json:"message"`
-		Data    api.TodoList `json:"data"`
-	}
-
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
-	return json.NewEncoder(w).Encode(List{
-		Data: *l,
-	})
-}
-
+//golint:ignore(gocyclo)
 func startHTTP(cfg *config.Config, errChan chan error) {
 	p := fmt.Sprintf(":%d", cfg.Local.HTTPPort)
 	logs.Local().Infof("starting http on %s", p)
@@ -77,7 +54,6 @@ func startHTTP(cfg *config.Config, errChan chan error) {
 			"Authorization",
 			"Content-Type",
 			"X-CSRF-Token",
-			"X-User-Token",
 			"X-User-Subject",
 		},
 		ExposedHeaders:   []string{"Link"},
@@ -87,18 +63,70 @@ func startHTTP(cfg *config.Config, errChan chan error) {
 	r.Get("/health", healthcheck.HTTP)
 	r.Get("/probe", probe.HTTP)
 
-	r.Route("/list", func(r chi.Router) {
+	r.Route("/account", func(r chi.Router) {
 		r.Get("/", func(w http.ResponseWriter, r *http.Request) {
 			subject := r.Header.Get("X-User-Subject")
-			token := r.Header.Get("X-User-Token")
 
-			if subject == "" || token == "" {
-				logs.Local().Info("No Subject or Token")
+			if subject == "" {
+				logs.Local().Info("No Subject")
 				w.WriteHeader(http.StatusUnauthorized)
 				return
 			}
 
-			l := api.NewListService(r.Context(), *cfg, subject, token)
+			a := api.NewAccountService(r.Context(), *cfg, subject)
+			account, err := a.GetAccount()
+			if err != nil {
+				logs.Local().Infof("Error: %s", err)
+				w.WriteHeader(http.StatusInternalServerError)
+				return
+			}
+
+			if account == nil {
+				account, err := a.CreateAccount()
+				if err != nil {
+					logs.Local().Infof("Error: %s", err)
+					w.WriteHeader(http.StatusInternalServerError)
+					return
+				}
+
+				if err := AccountData(w, account); err != nil {
+					logs.Local().Infof("Error: %s", err)
+					w.WriteHeader(http.StatusInternalServerError)
+					return
+				}
+			}
+
+			if err := AccountData(w, account); err != nil {
+				logs.Local().Infof("Error: %s", err)
+				w.WriteHeader(http.StatusInternalServerError)
+				return
+			}
+		})
+		r.Delete("/", func(w http.ResponseWriter, r *http.Request) {
+			subject := r.Header.Get("X-User-Subject")
+			if subject == "" {
+				logs.Local().Info("No Subject")
+				w.WriteHeader(http.StatusUnauthorized)
+				return
+			}
+
+			logs.Local().Infof("Subject: %s", r.Header.Get("X-User-Subject"))
+			w.Header().Set("debug", "delete account")
+			logs.Local().Info("Delete account")
+		})
+	})
+
+	r.Route("/list", func(r chi.Router) {
+		r.Get("/", func(w http.ResponseWriter, r *http.Request) {
+			subject := r.Header.Get("X-User-Subject")
+
+			if subject == "" {
+				logs.Local().Info("No Subject")
+				w.WriteHeader(http.StatusUnauthorized)
+				return
+			}
+
+			l := api.NewListService(r.Context(), *cfg, subject)
 			list, err := l.GetList()
 			if err != nil {
 				logs.Local().Infof("Error: %s", err)
@@ -122,9 +150,43 @@ func startHTTP(cfg *config.Config, errChan chan error) {
 			}
 		})
 		r.Post("/", func(w http.ResponseWriter, r *http.Request) {
-			logs.Local().Infof("Subject: %s", r.Header.Get("X-User-Subject"))
-			w.Header().Set("debug", "post list")
-			logs.Local().Info("Post List")
+			subject := r.Header.Get("X-User-Subject")
+
+			if subject == "" {
+				logs.Local().Info("No Subject")
+				w.WriteHeader(http.StatusUnauthorized)
+				return
+			}
+
+			type injectData struct {
+				Data string `json:"data"`
+				IV   string `json:"iv"`
+			}
+
+			id := injectData{}
+			if err := json.NewDecoder(r.Body).Decode(&id); err != nil {
+				logs.Local().Infof("Error: %s", err)
+				w.WriteHeader(http.StatusInternalServerError)
+				return
+			}
+
+			l := api.NewListService(r.Context(), *cfg, subject)
+			stored, err := l.CreateList(&api.StoredList{
+				UserID: subject,
+				Data:   id.Data,
+				IV:     id.IV,
+			})
+			if err != nil {
+				logs.Local().Infof("Error: %s", err)
+				w.WriteHeader(http.StatusInternalServerError)
+				return
+			}
+
+			if err := ListExists(w, stored); err != nil {
+				logs.Local().Infof("Error: %s", err)
+				w.WriteHeader(http.StatusInternalServerError)
+				return
+			}
 		})
 		r.Put("/", func(w http.ResponseWriter, r *http.Request) {
 			logs.Local().Infof("Subject: %s", r.Header.Get("X-User-Subject"))
