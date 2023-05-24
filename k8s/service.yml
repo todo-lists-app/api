@@ -20,6 +20,10 @@ spec:
       labels:
         app: api
     spec:
+      hostAliases:
+        - ip: "192.168.1.67"
+          hostnames:
+            - "cob.cobden.net"
       imagePullSecrets:
         - name: docker-registry-secret
       containers:
