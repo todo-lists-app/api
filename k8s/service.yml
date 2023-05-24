@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: api-service
+  name: api
   namespace: todo-list
   labels:
     app: keys-service
@@ -9,7 +9,7 @@ spec:
   replicas: 2
   selector:
     matchLabels:
-      app: api-service
+      app: api
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -18,12 +18,12 @@ spec:
   template:
     metadata:
       labels:
-        app: api-service
+        app: api
     spec:
       imagePullSecrets:
         - name: docker-registry-secret
       containers:
-        - name: api-service
+        - name: api
           image: containers.chewed-k8s.net/todo-list/api:latest
           imagePullPolicy: Always
           readinessProbe:
@@ -32,7 +32,6 @@ spec:
               port: 80
           ports:
             - containerPort: 80
-            - containerPort: 3000
           env:
             - name: VAULT_TOKEN
               valueFrom:
@@ -74,29 +73,29 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: api-service
+  name: api
   namespace: todo-list
   labels:
-    app: api-service
+    app: api
 spec:
   ports:
     - port: 3000
       protocol: TCP
       targetPort: 80
   selector:
-    app: api-service
+    app: api
 
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: api-service
+  name: api
   namespace: todo-list
   annotations:
     cert-manager.io/cluster-issuer: live-issuer
-    nginx.ingress.kubernetes.io/rewrite-target: /$1
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
   labels:
-    app: api-service
+    app: api
 spec:
   ingressClassName: nginx
   tls:
@@ -111,6 +110,6 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: api-service
+                name: api
                 port:
-                  number: 3000
+                  number: 80
