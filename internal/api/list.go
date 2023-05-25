@@ -6,7 +6,6 @@ import (
 	"fmt"
 
 	"github.com/bugfixes/go-bugfixes/logs"
-
 	"github.com/todo-lists-app/todo-lists-api/internal/config"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
