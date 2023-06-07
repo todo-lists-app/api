@@ -136,7 +136,7 @@ func startHTTP(cfg *config.Config, errChan chan error) {
 			list, err := l.GetList()
 			if err != nil {
 				logs.Infof("Error: %s", err)
-				w.WriteHeader(http.StatusInternalServerError)
+				w.WriteHeader(http.StatusOK)
 				return
 			}
 
