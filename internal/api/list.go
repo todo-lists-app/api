@@ -41,7 +41,7 @@ func (l *List) GetList() (*StoredList, error) {
 
 	client, err := mongo.Connect(l.Context, options.Client().ApplyURI(fmt.Sprintf("mongodb://%s:%s@%s", l.Config.Mongo.Username, l.Config.Mongo.Password, l.Config.Mongo.Host)))
 	if err != nil {
-		return &storeList, err
+		return &storeList, logs.Errorf("error connecting to mongo: %v", err)
 	}
 	defer func() {
 		if err := client.Disconnect(l.Context); err != nil {
@@ -52,8 +52,8 @@ func (l *List) GetList() (*StoredList, error) {
 	if err := client.Database(l.Config.Mongo.Database).Collection(l.Config.Mongo.ListCollection).FindOne(l.Context, &bson.M{
 		"userid": l.UserID,
 	}).Decode(&storeList); err != nil {
-		if errors.Is(err, mongo.ErrNoDocuments) {
-			return &storeList, err
+		if !errors.Is(err, mongo.ErrNoDocuments) {
+			return &storeList, logs.Errorf("error finding list: %v", err)
 		}
 		return &storeList, nil
 	}
@@ -63,19 +63,24 @@ func (l *List) GetList() (*StoredList, error) {
 
 // UpdateList updates a list for the user
 func (l *List) UpdateList(list *StoredList) (*StoredList, error) {
-	// if _, err := client.Database(l.Config.Mongo.Database).Collection(l.Config.Mongo.ListCollection).UpdateOne(l.Context, bson.M{
-	//	"userid": l.UserID,
-	// }, bson.D{
-	//	{
-	//		"$set", bson.D{
-	//			{"userid", l.UserID},
-	//			{"data", list.Data},
-	//			{"iv", list.IV},
-	//		},
-	//	},
-	// }); err != nil {
-	//	return nil, err
-	// }
+	client, err := mongo.Connect(l.Context, options.Client().ApplyURI(fmt.Sprintf("mongodb://%s:%s@%s", l.Config.Mongo.Username, l.Config.Mongo.Password, l.Config.Mongo.Host)))
+	if err != nil {
+		return nil, logs.Errorf("error connecting to mongo: %v", err)
+	}
+	defer func() {
+		if err := client.Disconnect(l.Context); err != nil {
+			logs.Debugf("error disconnecting from mongo: %v", err)
+		}
+	}()
+
+	if _, err := client.Database(l.Config.Mongo.Database).Collection(l.Config.Mongo.ListCollection).UpdateOne(l.Context,
+		bson.D{{"userid", l.UserID}},
+		bson.D{{"$set", bson.M{
+			"data": list.Data,
+			"iv":   list.IV,
+		}}}); err != nil {
+		return nil, logs.Errorf("error updating list: %v", err)
+	}
 
 	return list, nil
 }

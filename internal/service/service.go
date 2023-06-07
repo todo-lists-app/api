@@ -30,6 +30,11 @@ func (s *Service) Start() error {
 	return <-errChan
 }
 
+type injectData struct {
+	Data string `json:"data"`
+	IV   string `json:"iv"`
+}
+
 //golint:ignore(gocyclo)
 func startHTTP(cfg *config.Config, errChan chan error) {
 	p := fmt.Sprintf(":%d", cfg.Local.HTTPPort)
@@ -68,7 +73,7 @@ func startHTTP(cfg *config.Config, errChan chan error) {
 			subject := r.Header.Get("X-User-Subject")
 
 			if subject == "" {
-				logs.Local().Info("No Subject")
+				logs.Info("No Subject")
 				w.WriteHeader(http.StatusUnauthorized)
 				return
 			}
@@ -76,7 +81,7 @@ func startHTTP(cfg *config.Config, errChan chan error) {
 			a := api.NewAccountService(r.Context(), *cfg, subject)
 			account, err := a.GetAccount()
 			if err != nil {
-				logs.Local().Infof("Error: %s", err)
+				logs.Infof("Error: %s", err)
 				w.WriteHeader(http.StatusInternalServerError)
 				return
 			}
@@ -84,20 +89,20 @@ func startHTTP(cfg *config.Config, errChan chan error) {
 			if account == nil {
 				account, err := a.CreateAccount()
 				if err != nil {
-					logs.Local().Infof("Error: %s", err)
+					logs.Infof("Error: %s", err)
 					w.WriteHeader(http.StatusInternalServerError)
 					return
 				}
 
 				if err := AccountData(w, account); err != nil {
-					logs.Local().Infof("Error: %s", err)
+					logs.Infof("Error: %s", err)
 					w.WriteHeader(http.StatusInternalServerError)
 					return
 				}
 			}
 
 			if err := AccountData(w, account); err != nil {
-				logs.Local().Infof("Error: %s", err)
+				logs.Infof("Error: %s", err)
 				w.WriteHeader(http.StatusInternalServerError)
 				return
 			}
@@ -105,7 +110,7 @@ func startHTTP(cfg *config.Config, errChan chan error) {
 		r.Delete("/", func(w http.ResponseWriter, r *http.Request) {
 			subject := r.Header.Get("X-User-Subject")
 			if subject == "" {
-				logs.Local().Info("No Subject")
+				logs.Info("No Subject")
 				w.WriteHeader(http.StatusUnauthorized)
 				return
 			}
@@ -121,7 +126,7 @@ func startHTTP(cfg *config.Config, errChan chan error) {
 			subject := r.Header.Get("X-User-Subject")
 
 			if subject == "" {
-				logs.Local().Info("No Subject")
+				logs.Info("No Subject")
 				w.WriteHeader(http.StatusUnauthorized)
 				return
 			}
@@ -129,14 +134,14 @@ func startHTTP(cfg *config.Config, errChan chan error) {
 			l := api.NewListService(r.Context(), *cfg, subject)
 			list, err := l.GetList()
 			if err != nil {
-				logs.Local().Infof("Error: %s", err)
+				logs.Infof("Error: %s", err)
 				w.WriteHeader(http.StatusInternalServerError)
 				return
 			}
 
 			if list == nil {
 				if err := NoLists(w); err != nil {
-					logs.Local().Infof("Error: %s", err)
+					logs.Infof("Error: %s", err)
 					w.WriteHeader(http.StatusInternalServerError)
 					return
 				}
@@ -144,28 +149,24 @@ func startHTTP(cfg *config.Config, errChan chan error) {
 			}
 
 			if err := ListExists(w, list); err != nil {
-				logs.Local().Infof("Error: %s", err)
+				logs.Infof("Error: %s", err)
 				w.WriteHeader(http.StatusInternalServerError)
 				return
 			}
 		})
 		r.Post("/", func(w http.ResponseWriter, r *http.Request) {
 			subject := r.Header.Get("X-User-Subject")
+			logs.Infof("Subject: %s", subject)
 
 			if subject == "" {
-				logs.Local().Info("No Subject")
+				logs.Info("No Subject")
 				w.WriteHeader(http.StatusUnauthorized)
 				return
 			}
 
-			type injectData struct {
-				Data string `json:"data"`
-				IV   string `json:"iv"`
-			}
-
 			id := injectData{}
 			if err := json.NewDecoder(r.Body).Decode(&id); err != nil {
-				logs.Local().Infof("Error: %s", err)
+				logs.Infof("Error: %s", err)
 				w.WriteHeader(http.StatusInternalServerError)
 				return
 			}
@@ -177,25 +178,48 @@ func startHTTP(cfg *config.Config, errChan chan error) {
 				IV:     id.IV,
 			})
 			if err != nil {
-				logs.Local().Infof("Error: %s", err)
+				logs.Infof("Error: %s", err)
 				w.WriteHeader(http.StatusInternalServerError)
 				return
 			}
 
 			if err := ListExists(w, stored); err != nil {
-				logs.Local().Infof("Error: %s", err)
+				logs.Infof("Error: %s", err)
 				w.WriteHeader(http.StatusInternalServerError)
 				return
 			}
 		})
 		r.Put("/", func(w http.ResponseWriter, r *http.Request) {
-			logs.Local().Infof("Subject: %s", r.Header.Get("X-User-Subject"))
+			subject := r.Header.Get("X-User-Subject")
+			if subject == "" {
+				logs.Info("No Subject")
+				w.WriteHeader(http.StatusUnauthorized)
+				return
+			}
+
+			id := injectData{}
+			if err := json.NewDecoder(r.Body).Decode(&id); err != nil {
+				logs.Infof("Error: %s", err)
+				w.WriteHeader(http.StatusInternalServerError)
+				return
+			}
+			if _, err := api.NewListService(r.Context(), *cfg, subject).UpdateList(&api.StoredList{
+				UserID: subject,
+				Data:   id.Data,
+				IV:     id.IV,
+			}); err != nil {
+				logs.Infof("Error: %s", err)
+				w.WriteHeader(http.StatusInternalServerError)
+				return
+			}
+
 			w.Header().Set("debug", "put list")
-			logs.Local().Info("Put List")
+			w.WriteHeader(http.StatusOK)
 		})
 		r.Delete("/", func(w http.ResponseWriter, r *http.Request) {
-			logs.Local().Infof("Subject: %s", r.Header.Get("X-User-Subject"))
+			logs.Infof("Subject: %s", r.Header.Get("X-User-Subject"))
 			w.Header().Set("debug", "delete list")
+			w.WriteHeader(http.StatusNotImplemented)
 			logs.Local().Info("Delete List")
 		})
 	})
