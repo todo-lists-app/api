@@ -43,6 +43,7 @@ func startHTTP(cfg *config.Config, errChan chan error) {
 	allowedOrigins := []string{
 		"http://localhost:3000",
 		"https://todo-list.app",
+		"https://beta.todo-list.app",
 	}
 	if cfg.Local.Development {
 		allowedOrigins = append(allowedOrigins, "http://*")
