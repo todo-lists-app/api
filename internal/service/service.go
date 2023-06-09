@@ -2,7 +2,9 @@ package service
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
+	"go.mongodb.org/mongo-driver/mongo"
 	"net/http"
 	"time"
 
@@ -151,8 +153,15 @@ func startHTTP(cfg *config.Config, errChan chan error) {
 			l := api.NewListService(r.Context(), *cfg, subject)
 			list, err := l.GetList()
 			if err != nil {
+				if errors.Is(err, mongo.ErrNoDocuments) {
+					logs.Infof("Error: %s", err)
+					w.WriteHeader(http.StatusOK)
+					return
+				}
+
 				logs.Infof("Error: %s", err)
-				w.WriteHeader(http.StatusOK)
+				w.WriteHeader(http.StatusInternalServerError)
+				errChan <- err
 				return
 			}
 
