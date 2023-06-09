@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"time"
 
 	"github.com/bugfixes/go-bugfixes/logs"
 	"github.com/todo-lists-app/todo-lists-api/internal/config"
@@ -37,8 +38,13 @@ type StoredList struct {
 
 // GetList gets a list for the user
 func (l *List) GetList() (*StoredList, error) {
-	var storeList StoredList
+	if time.Now().Unix() > l.Config.Mongo.ExpireTime.Unix() {
+		if err := config.BuildMongo(&l.Config); err != nil {
+			return nil, logs.Errorf("error re-building mongo: %v", err)
+		}
+	}
 
+	var storeList StoredList
 	client, err := mongo.Connect(l.Context, options.Client().ApplyURI(fmt.Sprintf("mongodb://%s:%s@%s", l.Config.Mongo.Username, l.Config.Mongo.Password, l.Config.Mongo.Host)))
 	if err != nil {
 		return &storeList, logs.Errorf("error connecting to mongo: %v", err)
@@ -63,6 +69,12 @@ func (l *List) GetList() (*StoredList, error) {
 
 // UpdateList updates a list for the user
 func (l *List) UpdateList(list *StoredList) (*StoredList, error) {
+	if l.Config.Mongo.ExpireTime.Unix() > time.Now().Unix() {
+		if err := config.BuildMongo(&l.Config); err != nil {
+			return nil, logs.Errorf("error re-building mongo: %v", err)
+		}
+	}
+
 	client, err := mongo.Connect(l.Context, options.Client().ApplyURI(fmt.Sprintf("mongodb://%s:%s@%s", l.Config.Mongo.Username, l.Config.Mongo.Password, l.Config.Mongo.Host)))
 	if err != nil {
 		return nil, logs.Errorf("error connecting to mongo: %v", err)
@@ -87,6 +99,12 @@ func (l *List) UpdateList(list *StoredList) (*StoredList, error) {
 
 // DeleteList deletes a list for the user
 func (l *List) DeleteList(id string) (*StoredList, error) {
+	if l.Config.Mongo.ExpireTime.Unix() > time.Now().Unix() {
+		if err := config.BuildMongo(&l.Config); err != nil {
+			return nil, logs.Errorf("error re-building mongo: %v", err)
+		}
+	}
+
 	return &StoredList{
 		UserID: id,
 	}, nil
@@ -94,6 +112,12 @@ func (l *List) DeleteList(id string) (*StoredList, error) {
 
 // CreateList creates a new list for the user
 func (l *List) CreateList(list *StoredList) (*StoredList, error) {
+	if l.Config.Mongo.ExpireTime.Unix() > time.Now().Unix() {
+		if err := config.BuildMongo(&l.Config); err != nil {
+			return nil, logs.Errorf("error re-building mongo: %v", err)
+		}
+	}
+
 	client, err := mongo.Connect(l.Context, options.Client().ApplyURI(fmt.Sprintf("mongodb://%s:%s@%s", l.Config.Mongo.Username, l.Config.Mongo.Password, l.Config.Mongo.Host)))
 	if err != nil {
 		return nil, err

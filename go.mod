@@ -9,7 +9,7 @@ require (
 	github.com/go-chi/cors v1.2.1
 	github.com/keloran/go-healthcheck v1.2.0
 	github.com/keloran/go-probe v1.0.0
-	github.com/keloran/vault-helper v0.2.0
+	github.com/keloran/vault-helper v0.4.0
 	go.mongodb.org/mongo-driver v1.11.6
 	golang.org/x/crypto v0.8.0
 )
