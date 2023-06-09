@@ -35,6 +35,18 @@ type injectData struct {
 	IV   string `json:"iv"`
 }
 
+//const cbSettings = gobreaker.Settings{
+//	Name:        "HTTP Breaker",
+//	Timeout:     time.Second * 60,
+//	MaxRequests: 10,
+//	Interval:    time.Minute * 1,
+//	ReadyToTrip: func(counts gobreaker.Counts) bool {
+//		failureRatio := float64(counts.TotalFailures) / float64(counts.Requests)
+//		return counts.Requests >= 10 && failureRatio >= 0.6
+//	},
+//}
+//cb := gobreaker.NewCircuitBreaker(cbSettings)
+
 //golint:ignore(gocyclo)
 func startHTTP(cfg *config.Config, errChan chan error) {
 	p := fmt.Sprintf(":%d", cfg.Local.HTTPPort)
@@ -84,6 +96,7 @@ func startHTTP(cfg *config.Config, errChan chan error) {
 			if err != nil {
 				logs.Infof("Error: %s", err)
 				w.WriteHeader(http.StatusInternalServerError)
+				errChan <- err
 				return
 			}
 
@@ -92,12 +105,14 @@ func startHTTP(cfg *config.Config, errChan chan error) {
 				if err != nil {
 					logs.Infof("Error: %s", err)
 					w.WriteHeader(http.StatusInternalServerError)
+					errChan <- err
 					return
 				}
 
 				if err := AccountData(w, account); err != nil {
 					logs.Infof("Error: %s", err)
 					w.WriteHeader(http.StatusInternalServerError)
+					errChan <- err
 					return
 				}
 			}
@@ -105,6 +120,7 @@ func startHTTP(cfg *config.Config, errChan chan error) {
 			if err := AccountData(w, account); err != nil {
 				logs.Infof("Error: %s", err)
 				w.WriteHeader(http.StatusInternalServerError)
+				errChan <- err
 				return
 			}
 		})
@@ -144,6 +160,7 @@ func startHTTP(cfg *config.Config, errChan chan error) {
 				if err := NoLists(w); err != nil {
 					logs.Infof("Error: %s", err)
 					w.WriteHeader(http.StatusInternalServerError)
+					errChan <- err
 					return
 				}
 				return
@@ -152,6 +169,7 @@ func startHTTP(cfg *config.Config, errChan chan error) {
 			if err := ListExists(w, list); err != nil {
 				logs.Infof("Error: %s", err)
 				w.WriteHeader(http.StatusInternalServerError)
+				errChan <- err
 				return
 			}
 		})
@@ -169,6 +187,7 @@ func startHTTP(cfg *config.Config, errChan chan error) {
 			if err := json.NewDecoder(r.Body).Decode(&id); err != nil {
 				logs.Infof("Error: %s", err)
 				w.WriteHeader(http.StatusInternalServerError)
+				errChan <- err
 				return
 			}
 
@@ -181,12 +200,14 @@ func startHTTP(cfg *config.Config, errChan chan error) {
 			if err != nil {
 				logs.Infof("Error: %s", err)
 				w.WriteHeader(http.StatusInternalServerError)
+				errChan <- err
 				return
 			}
 
 			if err := ListExists(w, stored); err != nil {
 				logs.Infof("Error: %s", err)
 				w.WriteHeader(http.StatusInternalServerError)
+				errChan <- err
 				return
 			}
 		})
@@ -202,6 +223,7 @@ func startHTTP(cfg *config.Config, errChan chan error) {
 			if err := json.NewDecoder(r.Body).Decode(&id); err != nil {
 				logs.Infof("Error: %s", err)
 				w.WriteHeader(http.StatusInternalServerError)
+				errChan <- err
 				return
 			}
 			if _, err := api.NewListService(r.Context(), *cfg, subject).UpdateList(&api.StoredList{
@@ -211,6 +233,7 @@ func startHTTP(cfg *config.Config, errChan chan error) {
 			}); err != nil {
 				logs.Infof("Error: %s", err)
 				w.WriteHeader(http.StatusInternalServerError)
+				errChan <- err
 				return
 			}
 
