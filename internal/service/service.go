@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/todo-lists-app/todo-lists-api/internal/validate"
 	"go.mongodb.org/mongo-driver/mongo"
 	"net/http"
 	"time"
@@ -150,6 +151,19 @@ func startHTTP(cfg *config.Config, errChan chan error) {
 				return
 			}
 
+			v := validate.NewValidate(cfg, r.Context())
+			valid, err := v.ValidateUser(subject)
+			if err != nil {
+				logs.Infof("validate user err: %s", err)
+				w.WriteHeader(http.StatusInternalServerError)
+				return
+			}
+			if !valid {
+				logs.Info("invalid user")
+				w.WriteHeader(http.StatusUnauthorized)
+				return
+			}
+
 			l := api.NewListService(r.Context(), *cfg, subject)
 			list, err := l.GetList()
 			if err != nil {
@@ -192,6 +206,19 @@ func startHTTP(cfg *config.Config, errChan chan error) {
 				return
 			}
 
+			v := validate.NewValidate(cfg, r.Context())
+			valid, err := v.ValidateUser(subject)
+			if err != nil {
+				logs.Infof("validate user err: %s", err)
+				w.WriteHeader(http.StatusInternalServerError)
+				return
+			}
+			if !valid {
+				logs.Info("invalid user")
+				w.WriteHeader(http.StatusUnauthorized)
+				return
+			}
+
 			id := injectData{}
 			if err := json.NewDecoder(r.Body).Decode(&id); err != nil {
 				logs.Infof("Error: %s", err)
@@ -228,6 +255,19 @@ func startHTTP(cfg *config.Config, errChan chan error) {
 				return
 			}
 
+			v := validate.NewValidate(cfg, r.Context())
+			valid, err := v.ValidateUser(subject)
+			if err != nil {
+				logs.Infof("validate user err: %s", err)
+				w.WriteHeader(http.StatusInternalServerError)
+				return
+			}
+			if !valid {
+				logs.Info("invalid user")
+				w.WriteHeader(http.StatusUnauthorized)
+				return
+			}
+
 			id := injectData{}
 			if err := json.NewDecoder(r.Body).Decode(&id); err != nil {
 				logs.Infof("Error: %s", err)
@@ -250,7 +290,27 @@ func startHTTP(cfg *config.Config, errChan chan error) {
 			w.WriteHeader(http.StatusOK)
 		})
 		r.Delete("/", func(w http.ResponseWriter, r *http.Request) {
-			logs.Infof("Subject: %s", r.Header.Get("X-User-Subject"))
+			subject := r.Header.Get("X-User-Subject")
+			if subject == "" {
+				logs.Info("No Subject")
+				w.WriteHeader(http.StatusUnauthorized)
+				return
+			}
+
+			v := validate.NewValidate(cfg, r.Context())
+			valid, err := v.ValidateUser(subject)
+			if err != nil {
+				logs.Infof("validate user err: %s", err)
+				w.WriteHeader(http.StatusInternalServerError)
+				return
+			}
+			if !valid {
+				logs.Info("invalid user")
+				w.WriteHeader(http.StatusUnauthorized)
+				return
+			}
+
+			logs.Infof("Subject: %s", subject)
 			w.Header().Set("debug", "delete list")
 			w.WriteHeader(http.StatusNotImplemented)
 			logs.Local().Info("Delete List")

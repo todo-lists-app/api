@@ -11,6 +11,7 @@ type Config struct {
 	Local
 	Mongo
 	Vault
+	Identity
 }
 
 // Build is used to build the config, it will call BuildVault and BuildMongo
@@ -26,6 +27,10 @@ func Build() (*Config, error) {
 	}
 
 	if err := BuildMongo(cfg); err != nil {
+		return nil, logs.Error(err)
+	}
+
+	if err := BuildIdentity(cfg); err != nil {
 		return nil, logs.Error(err)
 	}
 
