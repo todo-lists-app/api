@@ -20,6 +20,10 @@ func NewValidate(config *config.Config, ctx context.Context) *Validate {
 }
 
 func (v *Validate) ValidateUser(userId string) (bool, error) {
+	if v.Config.Development {
+		return true, nil
+	}
+
 	conn, err := grpc.DialContext(v.CTX, v.Config.Identity.Service, grpc.WithInsecure())
 	if err != nil {
 		return false, err
