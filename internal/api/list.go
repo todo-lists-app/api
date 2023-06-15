@@ -69,7 +69,7 @@ func (l *List) GetList() (*StoredList, error) {
 
 // UpdateList updates a list for the user
 func (l *List) UpdateList(list *StoredList) (*StoredList, error) {
-	if l.Config.Mongo.ExpireTime.Unix() > time.Now().Unix() {
+	if time.Now().Unix() > l.Config.Mongo.ExpireTime.Unix() {
 		if err := config.BuildMongo(&l.Config); err != nil {
 			return nil, logs.Errorf("error re-building mongo: %v", err)
 		}
@@ -99,7 +99,7 @@ func (l *List) UpdateList(list *StoredList) (*StoredList, error) {
 
 // DeleteList deletes a list for the user
 func (l *List) DeleteList(id string) (*StoredList, error) {
-	if l.Config.Mongo.ExpireTime.Unix() > time.Now().Unix() {
+	if time.Now().Unix() > l.Config.Mongo.ExpireTime.Unix() {
 		if err := config.BuildMongo(&l.Config); err != nil {
 			return nil, logs.Errorf("error re-building mongo: %v", err)
 		}
@@ -112,7 +112,7 @@ func (l *List) DeleteList(id string) (*StoredList, error) {
 
 // CreateList creates a new list for the user
 func (l *List) CreateList(list *StoredList) (*StoredList, error) {
-	if l.Config.Mongo.ExpireTime.Unix() > time.Now().Unix() {
+	if time.Now().Unix() > l.Config.Mongo.ExpireTime.Unix() {
 		if err := config.BuildMongo(&l.Config); err != nil {
 			return nil, logs.Errorf("error re-building mongo: %v", err)
 		}
