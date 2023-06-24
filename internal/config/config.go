@@ -12,6 +12,7 @@ type Config struct {
 	Mongo
 	Vault
 	Identity
+	Notifications
 }
 
 // Build is used to build the config, it will call BuildVault and BuildMongo
@@ -31,6 +32,10 @@ func Build() (*Config, error) {
 	}
 
 	if err := BuildIdentity(cfg); err != nil {
+		return nil, logs.Error(err)
+	}
+
+	if err := BuildNotifications(cfg); err != nil {
 		return nil, logs.Error(err)
 	}
 

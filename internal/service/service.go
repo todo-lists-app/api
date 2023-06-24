@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/SherClockHolmes/webpush-go"
 	"github.com/todo-lists-app/todo-lists-api/internal/validate"
 	"go.mongodb.org/mongo-driver/mongo"
 	"net/http"
@@ -29,6 +30,7 @@ func (s *Service) Start() error {
 	errChan := make(chan error)
 
 	go startHTTP(s.Config, errChan)
+	go getNotifications(s.Config, errChan)
 
 	return <-errChan
 }
@@ -36,6 +38,10 @@ func (s *Service) Start() error {
 type injectData struct {
 	Data string `json:"data"`
 	IV   string `json:"iv"`
+}
+
+func getNotifications(cfg *config.Config, errChan chan error) {
+
 }
 
 //const cbSettings = gobreaker.Settings{
@@ -141,6 +147,76 @@ func startHTTP(cfg *config.Config, errChan chan error) {
 		})
 	})
 
+	r.Route("/notifications", func(r chi.Router) {
+		r.Get("/", func(w http.ResponseWriter, r *http.Request) {
+			subject := r.Header.Get("X-User-Subject")
+			if subject == "" {
+				logs.Info("No Subject")
+				w.WriteHeader(http.StatusUnauthorized)
+				return
+			}
+
+			type resp struct {
+				ID      string `json:"id"`
+				Message string `json:"message"`
+				Read    bool   `json:"read"`
+			}
+			respJ := []resp{
+				{
+					ID:      "1",
+					Message: "test",
+					Read:    false,
+				},
+			}
+
+			w.Header().Set("Content-Type", "application/json")
+			json.NewEncoder(w).Encode(respJ)
+		})
+
+		r.Get("/test", func(w http.ResponseWriter, r *http.Request) {
+			n := api.NewNotificationService(r.Context(), *cfg, "test")
+			if err := n.SendTestNotification(); err != nil {
+				w.WriteHeader(http.StatusInternalServerError)
+				logs.Infof("Error: %s", err)
+			}
+			w.WriteHeader(http.StatusOK)
+		})
+		r.Post("/subscribe", func(w http.ResponseWriter, r *http.Request) {
+			subject := r.Header.Get("X-User-Subject")
+			if subject == "" {
+				logs.Info("No Subject")
+				w.WriteHeader(http.StatusUnauthorized)
+				return
+			}
+
+			v := validate.NewValidate(cfg, r.Context())
+			valid, err := v.ValidateUser(subject)
+			if err != nil {
+				logs.Infof("validate user err: %s", err)
+				w.WriteHeader(http.StatusInternalServerError)
+				return
+			}
+			if !valid {
+				logs.Info("invalid user")
+				w.WriteHeader(http.StatusUnauthorized)
+				return
+			}
+
+			var sub webpush.Subscription
+			if err := json.NewDecoder(r.Body).Decode(&sub); err != nil {
+				logs.Infof("Error: %s", err)
+			}
+
+			n := api.NewNotificationService(r.Context(), *cfg, subject)
+			if err := n.StoreUser(sub); err != nil {
+				logs.Infof("Error: %s", err)
+				w.WriteHeader(http.StatusInternalServerError)
+				return
+			}
+			logs.Infof("Subscription: %v", sub)
+		})
+	})
+
 	r.Route("/list", func(r chi.Router) {
 		r.Get("/", func(w http.ResponseWriter, r *http.Request) {
 			subject := r.Header.Get("X-User-Subject")
@@ -168,7 +244,7 @@ func startHTTP(cfg *config.Config, errChan chan error) {
 			list, err := l.GetList()
 			if err != nil {
 				if errors.Is(err, mongo.ErrNoDocuments) {
-					logs.Infof("Error: %s", err)
+					// logs.Infof("Error: %s", err)
 					w.WriteHeader(http.StatusOK)
 					return
 				}

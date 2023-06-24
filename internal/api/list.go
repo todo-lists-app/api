@@ -3,14 +3,10 @@ package api
 import (
 	"context"
 	"errors"
-	"fmt"
-	"time"
-
 	"github.com/bugfixes/go-bugfixes/logs"
 	"github.com/todo-lists-app/todo-lists-api/internal/config"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
-	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 // List is the list service
@@ -38,54 +34,42 @@ type StoredList struct {
 
 // GetList gets a list for the user
 func (l *List) GetList() (*StoredList, error) {
-	if time.Now().Unix() > l.Config.Mongo.ExpireTime.Unix() {
-		if err := config.BuildMongo(&l.Config); err != nil {
-			return nil, logs.Errorf("error re-building mongo: %v", err)
-		}
-	}
-
-	var storeList StoredList
-	client, err := mongo.Connect(l.Context, options.Client().ApplyURI(fmt.Sprintf("mongodb://%s:%s@%s", l.Config.Mongo.Username, l.Config.Mongo.Password, l.Config.Mongo.Host)))
+	client, err := config.GetMongoClient(l.Context, l.Config)
 	if err != nil {
-		return &storeList, logs.Errorf("error connecting to mongo: %v", err)
+		return nil, logs.Errorf("error getting mongo client: %v", err)
 	}
 	defer func() {
 		if err := client.Disconnect(l.Context); err != nil {
-			logs.Debugf("error disconnecting from mongo: %v", err)
+			logs.Errorf("error disconnecting mongo client: %v", err)
 		}
 	}()
 
-	if err := client.Database(l.Config.Mongo.Database).Collection(l.Config.Mongo.ListCollection).FindOne(l.Context, &bson.M{
+	storedList := StoredList{}
+	if err := client.Database(l.Config.Mongo.Database).Collection(l.Config.Mongo.Collections.List).FindOne(l.Context, &bson.M{
 		"userid": l.UserID,
-	}).Decode(&storeList); err != nil {
+	}).Decode(&storedList); err != nil {
 		if !errors.Is(err, mongo.ErrNoDocuments) {
-			return &storeList, logs.Errorf("error finding list: %v", err)
+			return &storedList, logs.Errorf("error finding list: %v", err)
 		}
-		return &storeList, nil
+		return &storedList, nil
 	}
 
-	return &storeList, nil
+	return &storedList, nil
 }
 
 // UpdateList updates a list for the user
 func (l *List) UpdateList(list *StoredList) (*StoredList, error) {
-	if time.Now().Unix() > l.Config.Mongo.ExpireTime.Unix() {
-		if err := config.BuildMongo(&l.Config); err != nil {
-			return nil, logs.Errorf("error re-building mongo: %v", err)
-		}
-	}
-
-	client, err := mongo.Connect(l.Context, options.Client().ApplyURI(fmt.Sprintf("mongodb://%s:%s@%s", l.Config.Mongo.Username, l.Config.Mongo.Password, l.Config.Mongo.Host)))
+	client, err := config.GetMongoClient(l.Context, l.Config)
 	if err != nil {
-		return nil, logs.Errorf("error connecting to mongo: %v", err)
+		return nil, logs.Errorf("error getting mongo client: %v", err)
 	}
 	defer func() {
 		if err := client.Disconnect(l.Context); err != nil {
-			logs.Debugf("error disconnecting from mongo: %v", err)
+			logs.Errorf("error disconnecting mongo client: %v", err)
 		}
 	}()
 
-	if _, err := client.Database(l.Config.Mongo.Database).Collection(l.Config.Mongo.ListCollection).UpdateOne(l.Context,
+	if _, err := client.Database(l.Config.Mongo.Database).Collection(l.Config.Mongo.Collections.List).UpdateOne(l.Context,
 		bson.D{{"userid", l.UserID}},
 		bson.D{{"$set", bson.M{
 			"data": list.Data,
@@ -99,11 +83,15 @@ func (l *List) UpdateList(list *StoredList) (*StoredList, error) {
 
 // DeleteList deletes a list for the user
 func (l *List) DeleteList(id string) (*StoredList, error) {
-	if time.Now().Unix() > l.Config.Mongo.ExpireTime.Unix() {
-		if err := config.BuildMongo(&l.Config); err != nil {
-			return nil, logs.Errorf("error re-building mongo: %v", err)
-		}
+	client, err := config.GetMongoClient(l.Context, l.Config)
+	if err != nil {
+		return nil, logs.Errorf("error getting mongo client: %v", err)
 	}
+	defer func() {
+		if err := client.Disconnect(l.Context); err != nil {
+			logs.Errorf("error disconnecting mongo client: %v", err)
+		}
+	}()
 
 	return &StoredList{
 		UserID: id,
@@ -112,23 +100,17 @@ func (l *List) DeleteList(id string) (*StoredList, error) {
 
 // CreateList creates a new list for the user
 func (l *List) CreateList(list *StoredList) (*StoredList, error) {
-	if time.Now().Unix() > l.Config.Mongo.ExpireTime.Unix() {
-		if err := config.BuildMongo(&l.Config); err != nil {
-			return nil, logs.Errorf("error re-building mongo: %v", err)
-		}
-	}
-
-	client, err := mongo.Connect(l.Context, options.Client().ApplyURI(fmt.Sprintf("mongodb://%s:%s@%s", l.Config.Mongo.Username, l.Config.Mongo.Password, l.Config.Mongo.Host)))
+	client, err := config.GetMongoClient(l.Context, l.Config)
 	if err != nil {
-		return nil, err
+		return nil, logs.Errorf("error getting mongo client: %v", err)
 	}
 	defer func() {
 		if err := client.Disconnect(l.Context); err != nil {
-			logs.Debugf("error disconnecting from mongo: %v", err)
+			logs.Errorf("error disconnecting mongo client: %v", err)
 		}
 	}()
 
-	if _, err := client.Database(l.Config.Mongo.Database).Collection(l.Config.Mongo.ListCollection).InsertOne(l.Context, bson.M{
+	if _, err := client.Database(l.Config.Mongo.Database).Collection(l.Config.Mongo.Collections.List).InsertOne(l.Context, bson.M{
 		"userid": l.UserID,
 		"data":   list.Data,
 		"iv":     list.IV,
