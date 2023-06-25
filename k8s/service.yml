@@ -72,6 +72,27 @@ spec:
                 secretKeyRef:
                   name: api-secrets
                   key: vault-host
+            - name: VAPID_EMAIL
+              valueFrom:
+                secretKeyRef:
+                  name: api-secrets
+                  key: vapid-email
+            - name: VAPID_PRIVATE
+              valueFrom:
+                secretKeyRef:
+                  name: api-secrets
+                  key: vapid-private
+            - name: VAPID_PUBLIC
+              valueFrom:
+                secretKeyRef:
+                  name: api-secrets
+                  key: vapid-public
+            - name: MONGO_NOTIFICATION_COLLECTION
+              valueFrom:
+                secretKeyRef:
+                  name: api-secrets
+                  key: mongo-notification-collection
+
 
 ---
 apiVersion: v1

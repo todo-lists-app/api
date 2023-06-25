@@ -84,11 +84,15 @@ func (n *Notification) StoreUser(subscription webpush.Subscription) error {
 	}
 	if prev != nil {
 		if _, err := client.Database(n.Config.Mongo.Database).Collection(n.Config.Mongo.Collections.Notification).UpdateOne(n.Context,
-			bson.D{{"userID", n.UserID}},
+			bson.D{{"$and", bson.A{
+				bson.D{{"userID", n.UserID}},
+				bson.D{{"development", n.Config.Local.Development}},
+			}}},
 			bson.D{{"$set", bson.M{
-				"userID":      n.UserID,
-				"latestSub":   sub.LatestSub,
-				sub.LatestSub: subscription,
+				"userID":       n.UserID,
+				"latestSub":    sub.LatestSub,
+				"developement": n.Config.Local.Development,
+				sub.LatestSub:  subscription,
 			}}}); err != nil {
 			return logs.Errorf("error updating notification: %v", err)
 		}
@@ -99,6 +103,7 @@ func (n *Notification) StoreUser(subscription webpush.Subscription) error {
 	if _, err := client.Database(n.Config.Mongo.Database).Collection(n.Config.Mongo.Collections.Notification).InsertOne(n.Context, bson.M{
 		"userID":      n.UserID,
 		"latestSub":   sub.LatestSub,
+		"development": n.Config.Local.Development,
 		sub.LatestSub: subscription,
 	}); err != nil {
 		return logs.Errorf("error inserting notification: %v", err)
@@ -120,7 +125,8 @@ func (n Notification) GetSubscription(userId string) (*UserSubscription, error) 
 
 	var sub UserSubscription
 	if err := client.Database(n.Config.Mongo.Database).Collection(n.Config.Mongo.Collections.Notification).FindOne(n.Context, bson.M{
-		"userID": userId,
+		"userID":       userId,
+		"devvelopment": n.Config.Local.Development,
 	}).Decode(&sub); err != nil {
 		if !errors.Is(err, mongo.ErrNoDocuments) {
 			return nil, logs.Errorf("error getting notification: %v", err)
