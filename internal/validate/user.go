@@ -24,7 +24,7 @@ func (v *Validate) ValidateUser(userId string) (bool, error) {
 		return true, nil
 	}
 
-	conn, err := grpc.DialContext(v.CTX, v.Config.Identity.Service, grpc.WithInsecure())
+	conn, err := grpc.DialContext(v.CTX, v.Config.Services.Identity, grpc.WithInsecure())
 	if err != nil {
 		return false, err
 	}

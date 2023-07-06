@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/bugfixes/go-bugfixes/logs"
-	env "github.com/caarlos0/env/v8"
+	"github.com/caarlos0/env/v8"
 	vh "github.com/keloran/vault-helper"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"

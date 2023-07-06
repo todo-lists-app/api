@@ -6,9 +6,9 @@ import (
 
 // Local is the local config
 type Local struct {
-	KeepLocal   bool `env:"BUGFIXES_LOCAL_ONLY" envDefault:"false" json:"keep_local,omitempty"`
-	Development bool `env:"DEVELOPMENT" envDefault:"false" json:"development,omitempty"`
-	HTTPPort    int  `env:"HTTP_PORT" envDefault:"80" json:"port,omitempty"`
+	KeepLocal   bool `env:"BUGFIXES_LOCAL_ONLY" envDefault:"false"`
+	Development bool `env:"DEVELOPMENT" envDefault:"false"`
+	HTTPPort    int  `env:"HTTP_PORT" envDefault:"80"`
 }
 
 // BuildLocal builds the local config

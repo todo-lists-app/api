@@ -2,11 +2,11 @@ package api
 
 import (
 	"context"
-	"errors"
 	"github.com/bugfixes/go-bugfixes/logs"
+	pb "github.com/todo-lists-app/protobufs/generated/todo/v1"
 	"github.com/todo-lists-app/todo-lists-api/internal/config"
-	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/mongo"
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
 )
 
 // List is the list service
@@ -34,51 +34,55 @@ type StoredList struct {
 
 // GetList gets a list for the user
 func (l *List) GetList() (*StoredList, error) {
-	client, err := config.GetMongoClient(l.Context, l.Config)
+	conn, err := grpc.DialContext(l.Context, l.Config.Services.Todo, grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
-		return nil, logs.Errorf("error getting mongo client: %v", err)
+		return nil, logs.Errorf("error dialing grpc: %v", err)
 	}
-	defer func() {
-		if err := client.Disconnect(l.Context); err != nil {
-			logs.Errorf("error disconnecting mongo client: %v", err)
-		}
-	}()
-
-	storedList := StoredList{}
-	if err := client.Database(l.Config.Mongo.Database).Collection(l.Config.Mongo.Collections.List).FindOne(l.Context, &bson.M{
-		"userid": l.UserID,
-	}).Decode(&storedList); err != nil {
-		if !errors.Is(err, mongo.ErrNoDocuments) {
-			return &storedList, logs.Errorf("error finding list: %v", err)
-		}
-		return &storedList, nil
+	defer conn.Close()
+	g := pb.NewTodoServiceClient(conn)
+	resp, err := g.Get(l.Context, &pb.TodoGetRequest{
+		UserId: l.UserID,
+	})
+	if err != nil {
+		return nil, logs.Errorf("error getting list: %v", err)
+	}
+	if resp.GetStatus() != "" {
+		return nil, logs.Errorf("error getting list status: %v", resp.GetStatus())
 	}
 
-	return &storedList, nil
+	return &StoredList{
+		UserID: resp.GetUserId(),
+		Data:   resp.GetData(),
+		IV:     resp.GetIv(),
+	}, nil
 }
 
 // UpdateList updates a list for the user
 func (l *List) UpdateList(list *StoredList) (*StoredList, error) {
-	client, err := config.GetMongoClient(l.Context, l.Config)
+	conn, err := grpc.DialContext(l.Context, l.Config.Services.Todo, grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
-		return nil, logs.Errorf("error getting mongo client: %v", err)
+		return nil, logs.Errorf("error dialing grpc: %v", err)
 	}
-	defer func() {
-		if err := client.Disconnect(l.Context); err != nil {
-			logs.Errorf("error disconnecting mongo client: %v", err)
-		}
-	}()
+	defer conn.Close()
+	g := pb.NewTodoServiceClient(conn)
 
-	if _, err := client.Database(l.Config.Mongo.Database).Collection(l.Config.Mongo.Collections.List).UpdateOne(l.Context,
-		bson.D{{"userid", l.UserID}},
-		bson.D{{"$set", bson.M{
-			"data": list.Data,
-			"iv":   list.IV,
-		}}}); err != nil {
+	resp, err := g.Update(l.Context, &pb.TodoInjectRequest{
+		UserId: l.UserID,
+		Data:   list.Data,
+		Iv:     list.IV,
+	})
+	if err != nil {
 		return nil, logs.Errorf("error updating list: %v", err)
 	}
+	if resp.GetStatus() != "" {
+		return nil, logs.Errorf("error updating list status: %v", resp.GetStatus())
+	}
 
-	return list, nil
+	return &StoredList{
+		UserID: resp.GetUserId(),
+		Data:   resp.GetData(),
+		IV:     resp.GetIv(),
+	}, nil
 }
 
 // DeleteList deletes a list for the user
@@ -100,26 +104,27 @@ func (l *List) DeleteList(id string) (*StoredList, error) {
 
 // CreateList creates a new list for the user
 func (l *List) CreateList(list *StoredList) (*StoredList, error) {
-	client, err := config.GetMongoClient(l.Context, l.Config)
+	conn, err := grpc.DialContext(l.Context, l.Config.Services.Todo, grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
-		return nil, logs.Errorf("error getting mongo client: %v", err)
+		return nil, logs.Errorf("error dialing grpc: %v", err)
 	}
-	defer func() {
-		if err := client.Disconnect(l.Context); err != nil {
-			logs.Errorf("error disconnecting mongo client: %v", err)
-		}
-	}()
-
-	if _, err := client.Database(l.Config.Mongo.Database).Collection(l.Config.Mongo.Collections.List).InsertOne(l.Context, bson.M{
-		"userid": l.UserID,
-		"data":   list.Data,
-		"iv":     list.IV,
-	}); err != nil {
-		if mongo.IsDuplicateKeyError(err) {
-			return list, nil
-		}
-		return nil, err
+	defer conn.Close()
+	g := pb.NewTodoServiceClient(conn)
+	resp, err := g.Insert(l.Context, &pb.TodoInjectRequest{
+		UserId: l.UserID,
+		Data:   list.Data,
+		Iv:     list.IV,
+	})
+	if err != nil {
+		return nil, logs.Errorf("error inserting list: %v", err)
+	}
+	if resp.GetStatus() != "" {
+		return nil, logs.Errorf("error inserting list status: %v", resp.GetStatus())
 	}
 
-	return list, nil
+	return &StoredList{
+		UserID: resp.GetUserId(),
+		Data:   resp.GetData(),
+		IV:     resp.GetIv(),
+	}, nil
 }
