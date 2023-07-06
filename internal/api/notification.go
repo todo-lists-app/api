@@ -150,7 +150,7 @@ func (n Notification) SendTestNotification() error {
 	var sub UserSubscription
 	subscriber := n.Config.Notifications.VAPIDEmail
 	if err := client.Database(n.Config.Mongo.Database).Collection(n.Config.Mongo.Collections.Notification).FindOne(n.Context, bson.M{
-		"userID": "b3d1940e-d182-4fab-a574-37258e13d2d6",
+		"userID": n.Config.Notifications.TestUser,
 	}).Decode(&sub); err != nil {
 		return logs.Errorf("error getting notification: %v", err)
 	}

@@ -19,10 +19,6 @@ type Config struct {
 func Build() (*Config, error) {
 	cfg := &Config{}
 
-	if err := env.Parse(cfg); err != nil {
-		return nil, logs.Error(err)
-	}
-
 	if err := BuildVault(cfg); err != nil {
 		return nil, logs.Error(err)
 	}
@@ -42,6 +38,10 @@ func Build() (*Config, error) {
 	if err := BuildLocal(cfg); err != nil {
 		return nil, logs.Error(err)
 	}
+
+  if err := env.Parse(cfg); err != nil {
+    return nil, logs.Error(err)
+  }
 
 	return cfg, nil
 }

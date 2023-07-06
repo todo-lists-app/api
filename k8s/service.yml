@@ -91,7 +91,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: api-secrets
-                  key: mongo-notification-collection
+                  key: mongo-notification-collection$
 
 
 ---

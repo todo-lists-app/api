@@ -38,7 +38,7 @@ func BuildMongo(c *Config) error {
 	}
 
 	v := vh.NewVault(c.Vault.Address, c.Vault.Token)
-	if err := v.GetSecrets(c.Mongo.Vault.Path); err != nil {
+	if err := v.GetSecrets(mongo.Vault.Path); err != nil {
 		return err
 	}
 

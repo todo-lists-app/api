@@ -157,15 +157,19 @@ func startHTTP(cfg *config.Config, errChan chan error) {
 			}
 
 			type resp struct {
-				ID      string `json:"id"`
-				Message string `json:"message"`
-				Read    bool   `json:"read"`
+				ID       string `json:"id"`
+				Title    string `json:"title"`
+				Message  string `json:"message"`
+				Read     bool   `json:"read"`
+				Priority string `json:"priority"`
 			}
 			respJ := []resp{
 				{
-					ID:      "1",
-					Message: "test",
-					Read:    false,
+					ID:       "jyuuuooprf8",
+					Title:    "test",
+					Message:  "test message",
+					Read:     false,
+					Priority: "low",
 				},
 			}
 
