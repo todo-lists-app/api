@@ -34,22 +34,22 @@ func BuildMongo(c *Config) error {
 	mongo := &Mongo{}
 
 	if err := env.Parse(mongo); err != nil {
-		return err
+		return logs.Errorf("error parsing mongo: %v", err)
 	}
 
 	v := vh.NewVault(c.Vault.Address, c.Vault.Token)
 	if err := v.GetSecrets(mongo.Vault.Path); err != nil {
-		return err
+		return logs.Errorf("error getting secrets: %v", err)
 	}
 
 	username, err := v.GetSecret("username")
 	if err != nil {
-		return err
+		return logs.Error("error getting username")
 	}
 
 	password, err := v.GetSecret("password")
 	if err != nil {
-		return err
+		return logs.Errorf("error getting password: %v", err)
 	}
 
 	mongo.Vault.ExpireTime = time.Now().Add(time.Duration(v.LeaseDuration) * time.Second)

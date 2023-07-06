@@ -1,6 +1,9 @@
 package config
 
-import "github.com/caarlos0/env/v8"
+import (
+	"github.com/bugfixes/go-bugfixes/logs"
+	"github.com/caarlos0/env/v8"
+)
 
 type Notifications struct {
 	VAPIDEmail   string `env:"VAPID_EMAIL" envDefault:""`
@@ -12,7 +15,7 @@ type Notifications struct {
 func BuildNotifications(cfg *Config) error {
 	notifications := &Notifications{}
 	if err := env.Parse(notifications); err != nil {
-		return err
+		return logs.Errorf("unable to parse notifications: %w", err)
 	}
 	cfg.Notifications = *notifications
 

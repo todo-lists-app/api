@@ -1,6 +1,9 @@
 package config
 
-import "github.com/caarlos0/env/v8"
+import (
+	"github.com/bugfixes/go-bugfixes/logs"
+	"github.com/caarlos0/env/v8"
+)
 
 type Services struct {
 	Identity string `env:"IDENTITY_SERVICE" envDefault:"id-checker.todo-list:3000"`
@@ -10,7 +13,7 @@ type Services struct {
 func BuildServices(cfg *Config) error {
 	services := &Services{}
 	if err := env.Parse(services); err != nil {
-		return err
+		return logs.Errorf("unable to parse services: %v", err)
 	}
 	cfg.Services = *services
 

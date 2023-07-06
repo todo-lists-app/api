@@ -2,6 +2,7 @@ package config
 
 import (
 	"fmt"
+	"github.com/bugfixes/go-bugfixes/logs"
 	"strings"
 
 	env "github.com/caarlos0/env/v8"
@@ -20,7 +21,7 @@ func BuildVault(cfg *Config) error {
 	v := &Vault{}
 
 	if err := env.Parse(v); err != nil {
-		return err
+		return logs.Errorf("vault: %w", err)
 	}
 
 	if strings.HasPrefix(v.Host, "http") {

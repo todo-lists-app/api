@@ -1,6 +1,7 @@
 package config
 
 import (
+	"github.com/bugfixes/go-bugfixes/logs"
 	env "github.com/caarlos0/env/v8"
 )
 
@@ -15,7 +16,7 @@ type Local struct {
 func BuildLocal(cfg *Config) error {
 	local := &Local{}
 	if err := env.Parse(local); err != nil {
-		return err
+		return logs.Errorf("failed to parse local config: %v", err)
 	}
 	cfg.Local = *local
 
