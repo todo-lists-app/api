@@ -2,9 +2,11 @@ package validate
 
 import (
 	"context"
+	"github.com/bugfixes/go-bugfixes/logs"
 	pb "github.com/todo-lists-app/protobufs/generated/id_checker/v1"
 	"github.com/todo-lists-app/todo-lists-api/internal/config"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
 )
 
 type Validate struct {
@@ -24,7 +26,7 @@ func (v *Validate) ValidateUser(userId string) (bool, error) {
 		return true, nil
 	}
 
-	conn, err := grpc.DialContext(v.CTX, v.Config.Services.Identity, grpc.WithInsecure())
+	conn, err := grpc.DialContext(v.CTX, v.Config.Services.Identity, grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		return false, err
 	}
@@ -35,7 +37,8 @@ func (v *Validate) ValidateUser(userId string) (bool, error) {
 		Id: userId,
 	})
 	if err != nil {
-		return false, err
+		logs.Infof("error checking id: %v, %s", err, userId)
+		return false, nil
 	}
 	if !resp.GetIsValid() {
 		return false, nil

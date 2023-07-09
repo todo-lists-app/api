@@ -79,9 +79,9 @@ func (l *List) UpdateList(list *StoredList) (*StoredList, error) {
 	}
 
 	return &StoredList{
-		UserID: resp.GetUserId(),
-		Data:   resp.GetData(),
-		IV:     resp.GetIv(),
+		UserID: list.UserID,
+		Data:   list.Data,
+		IV:     list.IV,
 	}, nil
 }
 
