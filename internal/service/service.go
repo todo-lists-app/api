@@ -82,6 +82,7 @@ func startHTTP(cfg *config.Config, errChan chan error) {
 			"Content-Type",
 			"X-CSRF-Token",
 			"X-User-Subject",
+			"X-User-Access-Token",
 		},
 		ExposedHeaders:   []string{"Link"},
 		AllowCredentials: true,
@@ -192,9 +193,15 @@ func startHTTP(cfg *config.Config, errChan chan error) {
 				w.WriteHeader(http.StatusUnauthorized)
 				return
 			}
+			accessToken := r.Header.Get("X-User-Access-Token")
+			if accessToken == "" {
+				logs.Info("No Access Token")
+				w.WriteHeader(http.StatusUnauthorized)
+				return
+			}
 
 			v := validate.NewValidate(cfg, r.Context())
-			valid, err := v.ValidateUser(subject)
+			valid, err := v.ValidateUser(accessToken, subject)
 			if err != nil {
 				logs.Infof("validate user err: %s", err)
 				w.WriteHeader(http.StatusInternalServerError)
@@ -224,15 +231,21 @@ func startHTTP(cfg *config.Config, errChan chan error) {
 	r.Route("/list", func(r chi.Router) {
 		r.Get("/", func(w http.ResponseWriter, r *http.Request) {
 			subject := r.Header.Get("X-User-Subject")
-
 			if subject == "" {
 				logs.Info("No Subject")
 				w.WriteHeader(http.StatusUnauthorized)
 				return
 			}
 
+			accessToken := r.Header.Get("X-User-Access-Token")
+			if accessToken == "" {
+				logs.Info("No Access Token")
+				w.WriteHeader(http.StatusUnauthorized)
+				return
+			}
+
 			v := validate.NewValidate(cfg, r.Context())
-			valid, err := v.ValidateUser(subject)
+			valid, err := v.ValidateUser(accessToken, subject)
 			if err != nil {
 				logs.Infof("validate user err: %s", err)
 				w.WriteHeader(http.StatusInternalServerError)
@@ -278,16 +291,21 @@ func startHTTP(cfg *config.Config, errChan chan error) {
 		})
 		r.Post("/", func(w http.ResponseWriter, r *http.Request) {
 			subject := r.Header.Get("X-User-Subject")
-			logs.Infof("Subject: %s", subject)
-
 			if subject == "" {
 				logs.Info("No Subject")
 				w.WriteHeader(http.StatusUnauthorized)
 				return
 			}
 
+			accessToken := r.Header.Get("X-User-Access-Token")
+			if accessToken == "" {
+				logs.Info("No Access Token")
+				w.WriteHeader(http.StatusUnauthorized)
+				return
+			}
+
 			v := validate.NewValidate(cfg, r.Context())
-			valid, err := v.ValidateUser(subject)
+			valid, err := v.ValidateUser(accessToken, subject)
 			if err != nil {
 				logs.Infof("validate user err: %s", err)
 				w.WriteHeader(http.StatusInternalServerError)
@@ -334,9 +352,15 @@ func startHTTP(cfg *config.Config, errChan chan error) {
 				w.WriteHeader(http.StatusUnauthorized)
 				return
 			}
+			accessToken := r.Header.Get("X-User-Access-Token")
+			if accessToken == "" {
+				logs.Info("No Access Token")
+				w.WriteHeader(http.StatusUnauthorized)
+				return
+			}
 
 			v := validate.NewValidate(cfg, r.Context())
-			valid, err := v.ValidateUser(subject)
+			valid, err := v.ValidateUser(accessToken, subject)
 			if err != nil {
 				logs.Infof("validate user err: %s", err)
 				w.WriteHeader(http.StatusInternalServerError)
@@ -376,9 +400,15 @@ func startHTTP(cfg *config.Config, errChan chan error) {
 				w.WriteHeader(http.StatusUnauthorized)
 				return
 			}
+			accessToken := r.Header.Get("X-User-Access-Token")
+			if accessToken == "" {
+				logs.Info("No Access Token")
+				w.WriteHeader(http.StatusUnauthorized)
+				return
+			}
 
 			v := validate.NewValidate(cfg, r.Context())
-			valid, err := v.ValidateUser(subject)
+			valid, err := v.ValidateUser(accessToken, subject)
 			if err != nil {
 				logs.Infof("validate user err: %s", err)
 				w.WriteHeader(http.StatusInternalServerError)

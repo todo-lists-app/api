@@ -114,6 +114,8 @@ github.com/todo-lists-app/protobufs v0.0.0-20230705113523-563f1a1162b6 h1:PI7wWR
 github.com/todo-lists-app/protobufs v0.0.0-20230705113523-563f1a1162b6/go.mod h1:++aQjX2RgYmrKu32JKXipEG1H2vu/bqMTCdR03ZPrPM=
 github.com/todo-lists-app/protobufs v0.0.0-20230706200119-b8eb0b8aa429 h1:JOym3RDMIIyGRT+fGBM98rkAP8GM48XvQ/dORy0MphM=
 github.com/todo-lists-app/protobufs v0.0.0-20230706200119-b8eb0b8aa429/go.mod h1:++aQjX2RgYmrKu32JKXipEG1H2vu/bqMTCdR03ZPrPM=
+github.com/todo-lists-app/protobufs v0.0.0-20230710081248-476dd05ee743 h1:Iv2p71q+I7PR9Vs9fya2WzRe1i4aP7H7GgR12oHohSc=
+github.com/todo-lists-app/protobufs v0.0.0-20230710081248-476dd05ee743/go.mod h1:++aQjX2RgYmrKu32JKXipEG1H2vu/bqMTCdR03ZPrPM=
 github.com/xdg-go/pbkdf2 v1.0.0 h1:Su7DPu48wXMwC3bs7MCNG+z4FhcyEuz5dlvchbq0B0c=
 github.com/xdg-go/pbkdf2 v1.0.0/go.mod h1:jrpuAogTd400dnrH08LKmI/xc1MbPOebTwRqcT5RDeI=
 github.com/xdg-go/scram v1.1.1 h1:VOMT+81stJgXW3CpHyqHN3AXDYIMsx56mEFrB37Mb/E=

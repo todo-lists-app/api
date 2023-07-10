@@ -21,7 +21,7 @@ func NewValidate(config *config.Config, ctx context.Context) *Validate {
 	}
 }
 
-func (v *Validate) ValidateUser(userId string) (bool, error) {
+func (v *Validate) ValidateUser(accessToken, userId string) (bool, error) {
 	if v.Config.Development {
 		return true, nil
 	}
@@ -34,7 +34,8 @@ func (v *Validate) ValidateUser(userId string) (bool, error) {
 
 	g := pb.NewIdCheckerServiceClient(conn)
 	resp, err := g.CheckId(v.CTX, &pb.CheckIdRequest{
-		Id: userId,
+		Id:          userId,
+		AccessToken: accessToken,
 	})
 	if err != nil {
 		logs.Infof("error checking id: %v, %s", err, userId)

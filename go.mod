@@ -11,7 +11,7 @@ require (
 	github.com/keloran/go-healthcheck v1.2.0
 	github.com/keloran/go-probe v1.0.0
 	github.com/keloran/vault-helper v0.4.0
-	github.com/todo-lists-app/protobufs v0.0.0-20230706200119-b8eb0b8aa429
+	github.com/todo-lists-app/protobufs v0.0.0-20230710081248-476dd05ee743
 	go.mongodb.org/mongo-driver v1.11.6
 	google.golang.org/grpc v1.55.0
 )
