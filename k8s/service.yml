@@ -4,12 +4,12 @@ metadata:
   name: api
   namespace: todo-list
   labels:
-    app: keys-service
+    app: orchestrator
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: api
+      app: orchestrator
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -18,7 +18,7 @@ spec:
   template:
     metadata:
       labels:
-        app: api
+        app: orchestrator
     spec:
       hostAliases:
         - ip: "192.168.1.67"
@@ -27,7 +27,7 @@ spec:
       imagePullSecrets:
         - name: docker-registry-secret
       containers:
-        - name: api
+        - name: orchestrator
           image: containers.chewed-k8s.net/todo-list/api:latest
           imagePullPolicy: Always
           readinessProbe:
@@ -91,36 +91,36 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: api-secrets
-                  key: mongo-notification-collection$
+                  key: mongo-notification-collection
 
 
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: api
+  name: orchestrator
   namespace: todo-list
   labels:
-    app: api
+    app: orchestrator
 spec:
   ports:
     - port: 3000
       protocol: TCP
       targetPort: 80
   selector:
-    app: api
+    app: orchestrator
 
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: api
+  name: orchestrator
   namespace: todo-list
   annotations:
     cert-manager.io/cluster-issuer: live-issuer
     nginx.ingress.kubernetes.io/rewrite-target: /$2
   labels:
-    app: api
+    app: orchestrator
 spec:
   ingressClassName: nginx
   tls:
@@ -135,6 +135,6 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: api
+                name: orchestrator
                 port:
                   number: 80
