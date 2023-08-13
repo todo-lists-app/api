@@ -74,7 +74,7 @@ func (n *Notification) StoreUser(subscription webpush.Subscription) error {
 	}
 	defer func() {
 		if err := client.Disconnect(n.Context); err != nil {
-			logs.Errorf("error disconnecting mongo client: %v", err)
+			logs.Infof("error disconnecting mongo client: %v", err)
 		}
 	}()
 
@@ -119,7 +119,7 @@ func (n Notification) GetSubscription(userId string) (*UserSubscription, error) 
 	}
 	defer func() {
 		if err := client.Disconnect(n.Context); err != nil {
-			logs.Errorf("error disconnecting mongo client: %v", err)
+			logs.Infof("error disconnecting mongo client: %v", err)
 		}
 	}()
 
@@ -210,7 +210,11 @@ func (n Notification) SendTestNotification() error {
 	if err != nil {
 		return err
 	}
-	defer resp.Body.Close()
+	defer func() {
+		if err := resp.Body.Close(); err != nil {
+			logs.Infof("error closing response body: %v", err)
+		}
+	}()
 	logs.Info(resp.StatusCode)
 	logs.Infof("message: %+v", m)
 
