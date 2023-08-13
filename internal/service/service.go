@@ -11,11 +11,11 @@ import (
 	"time"
 
 	"github.com/bugfixes/go-bugfixes/logs"
-	chi "github.com/go-chi/chi/v5"
+	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/go-chi/cors"
-	healthcheck "github.com/keloran/go-healthcheck"
-	probe "github.com/keloran/go-probe"
+	"github.com/keloran/go-healthcheck"
+	"github.com/keloran/go-probe"
 	"github.com/todo-lists-app/todo-lists-api/internal/api"
 	"github.com/todo-lists-app/todo-lists-api/internal/config"
 )
