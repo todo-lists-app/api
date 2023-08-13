@@ -2,7 +2,7 @@ package config
 
 import (
 	"github.com/bugfixes/go-bugfixes/logs"
-	env "github.com/caarlos0/env/v8"
+	"github.com/caarlos0/env/v8"
 )
 
 // Local is the local config

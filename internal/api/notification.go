@@ -143,7 +143,7 @@ func (n Notification) SendTestNotification() error {
 	}
 	defer func() {
 		if err := client.Disconnect(n.Context); err != nil {
-			logs.Errorf("error disconnecting mongo client: %v", err)
+			logs.Infof("error disconnecting mongo client: %v", err)
 		}
 	}()
 

@@ -30,7 +30,7 @@ func (s *Service) Start() error {
 	errChan := make(chan error)
 
 	go startHTTP(s.Config, errChan)
-	go getNotifications(s.Config, errChan)
+	// go getNotifications(s.Config, errChan)
 
 	return <-errChan
 }
@@ -40,9 +40,9 @@ type injectData struct {
 	IV   string `json:"iv"`
 }
 
-func getNotifications(cfg *config.Config, errChan chan error) {
-
-}
+//func getNotifications(cfg *config.Config, errChan chan error) {
+//
+//}
 
 //const cbSettings = gobreaker.Settings{
 //	Name:        "HTTP Breaker",
@@ -175,7 +175,9 @@ func startHTTP(cfg *config.Config, errChan chan error) {
 			}
 
 			w.Header().Set("Content-Type", "application/json")
-			json.NewEncoder(w).Encode(respJ)
+			if err := json.NewEncoder(w).Encode(respJ); err != nil {
+				logs.Infof("Encode Error: %s", err)
+			}
 		})
 
 		r.Get("/test", func(w http.ResponseWriter, r *http.Request) {

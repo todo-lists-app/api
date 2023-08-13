@@ -5,7 +5,7 @@ import (
 	"github.com/bugfixes/go-bugfixes/logs"
 	"strings"
 
-	env "github.com/caarlos0/env/v8"
+	"github.com/caarlos0/env/v8"
 )
 
 // Vault is the vault config

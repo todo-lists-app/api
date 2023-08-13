@@ -30,7 +30,11 @@ func (v *Validate) ValidateUser(accessToken, userId string) (bool, error) {
 	if err != nil {
 		return false, err
 	}
-	defer conn.Close()
+	defer func() {
+		if err := conn.Close(); err != nil {
+			logs.Infof("error closing connection: %v", err)
+		}
+	}()
 
 	g := pb.NewIdCheckerServiceClient(conn)
 	resp, err := g.CheckId(v.CTX, &pb.CheckIdRequest{

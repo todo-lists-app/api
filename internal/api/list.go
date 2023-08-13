@@ -38,7 +38,11 @@ func (l *List) GetList() (*StoredList, error) {
 	if err != nil {
 		return nil, logs.Errorf("error dialing grpc: %v", err)
 	}
-	defer conn.Close()
+	defer func() {
+		if err := conn.Close(); err != nil {
+			logs.Infof("error closing grpc connection: %v", err)
+		}
+	}()
 	g := pb.NewTodoServiceClient(conn)
 	resp, err := g.Get(l.Context, &pb.TodoGetRequest{
 		UserId: l.UserID,
@@ -63,7 +67,11 @@ func (l *List) UpdateList(list *StoredList) (*StoredList, error) {
 	if err != nil {
 		return nil, logs.Errorf("error dialing grpc: %v", err)
 	}
-	defer conn.Close()
+	defer func() {
+		if err := conn.Close(); err != nil {
+			logs.Infof("error closing grpc connection: %v", err)
+		}
+	}()
 	g := pb.NewTodoServiceClient(conn)
 
 	resp, err := g.Update(l.Context, &pb.TodoInjectRequest{
@@ -93,7 +101,7 @@ func (l *List) DeleteList(id string) (*StoredList, error) {
 	}
 	defer func() {
 		if err := client.Disconnect(l.Context); err != nil {
-			logs.Errorf("error disconnecting mongo client: %v", err)
+			logs.Infof("error disconnecting mongo client: %v", err)
 		}
 	}()
 
@@ -108,7 +116,11 @@ func (l *List) CreateList(list *StoredList) (*StoredList, error) {
 	if err != nil {
 		return nil, logs.Errorf("error dialing grpc: %v", err)
 	}
-	defer conn.Close()
+	defer func() {
+		if err := conn.Close(); err != nil {
+			logs.Infof("error closing grpc connection: %v", err)
+		}
+	}()
 	g := pb.NewTodoServiceClient(conn)
 	resp, err := g.Insert(l.Context, &pb.TodoInjectRequest{
 		UserId: l.UserID,
