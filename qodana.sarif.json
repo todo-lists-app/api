@@ -876,6 +876,39 @@
                 ]
               },
               {
+                "id": "IfStatementWithTooManyBranchesJS",
+                "shortDescription": {
+                  "text": "'if' statement with too many branches"
+                },
+                "fullDescription": {
+                  "text": "Reports an 'if' statement with too many branches. Such statements may be confusing, and often indicate inadequate levels of design abstraction. Use the field below to specify the maximum number of branches expected.",
+                  "markdown": "Reports an `if` statement with too many branches. Such statements may be confusing, and often indicate inadequate levels of design abstraction.\n\n\nUse the field below to specify the maximum number of branches expected."
+                },
+                "defaultConfiguration": {
+                  "enabled": false,
+                  "level": "warning",
+                  "parameters": {
+                    "suppressToolId": "IfStatementWithTooManyBranchesJS",
+                    "ideaSeverity": "WARNING",
+                    "qodanaSeverity": "High"
+                  }
+                },
+                "relationships": [
+                  {
+                    "target": {
+                      "id": "JavaScript and TypeScript/Control flow issues",
+                      "index": 1,
+                      "toolComponent": {
+                        "name": "QDGO"
+                      }
+                    },
+                    "kinds": [
+                      "superset"
+                    ]
+                  }
+                ]
+              },
+              {
                 "id": "NonBlockStatementBodyJS",
                 "shortDescription": {
                   "text": "Statement body without braces"
@@ -931,39 +964,6 @@
                     "target": {
                       "id": "JavaScript and TypeScript/General",
                       "index": 10,
-                      "toolComponent": {
-                        "name": "QDGO"
-                      }
-                    },
-                    "kinds": [
-                      "superset"
-                    ]
-                  }
-                ]
-              },
-              {
-                "id": "IfStatementWithTooManyBranchesJS",
-                "shortDescription": {
-                  "text": "'if' statement with too many branches"
-                },
-                "fullDescription": {
-                  "text": "Reports an 'if' statement with too many branches. Such statements may be confusing, and often indicate inadequate levels of design abstraction. Use the field below to specify the maximum number of branches expected.",
-                  "markdown": "Reports an `if` statement with too many branches. Such statements may be confusing, and often indicate inadequate levels of design abstraction.\n\n\nUse the field below to specify the maximum number of branches expected."
-                },
-                "defaultConfiguration": {
-                  "enabled": false,
-                  "level": "warning",
-                  "parameters": {
-                    "suppressToolId": "IfStatementWithTooManyBranchesJS",
-                    "ideaSeverity": "WARNING",
-                    "qodanaSeverity": "High"
-                  }
-                },
-                "relationships": [
-                  {
-                    "target": {
-                      "id": "JavaScript and TypeScript/Control flow issues",
-                      "index": 1,
                       "toolComponent": {
                         "name": "QDGO"
                       }
@@ -1800,39 +1800,6 @@
                 ]
               },
               {
-                "id": "UnnecessaryLabelOnBreakStatementJS",
-                "shortDescription": {
-                  "text": "Unnecessary label on 'break' statement"
-                },
-                "fullDescription": {
-                  "text": "Reports a labeled 'break' statement whose labels may be removed without changing the flow of control.",
-                  "markdown": "Reports a labeled `break` statement whose labels may be removed without changing the flow of control."
-                },
-                "defaultConfiguration": {
-                  "enabled": false,
-                  "level": "warning",
-                  "parameters": {
-                    "suppressToolId": "UnnecessaryLabelOnBreakStatementJS",
-                    "ideaSeverity": "WARNING",
-                    "qodanaSeverity": "High"
-                  }
-                },
-                "relationships": [
-                  {
-                    "target": {
-                      "id": "JavaScript and TypeScript/Control flow issues",
-                      "index": 1,
-                      "toolComponent": {
-                        "name": "QDGO"
-                      }
-                    },
-                    "kinds": [
-                      "superset"
-                    ]
-                  }
-                ]
-              },
-              {
                 "id": "ES6ShorthandObjectProperty",
                 "shortDescription": {
                   "text": "Property can be replaced with shorthand"
@@ -1855,6 +1822,39 @@
                     "target": {
                       "id": "JavaScript and TypeScript/General",
                       "index": 10,
+                      "toolComponent": {
+                        "name": "QDGO"
+                      }
+                    },
+                    "kinds": [
+                      "superset"
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "UnnecessaryLabelOnBreakStatementJS",
+                "shortDescription": {
+                  "text": "Unnecessary label on 'break' statement"
+                },
+                "fullDescription": {
+                  "text": "Reports a labeled 'break' statement whose labels may be removed without changing the flow of control.",
+                  "markdown": "Reports a labeled `break` statement whose labels may be removed without changing the flow of control."
+                },
+                "defaultConfiguration": {
+                  "enabled": false,
+                  "level": "warning",
+                  "parameters": {
+                    "suppressToolId": "UnnecessaryLabelOnBreakStatementJS",
+                    "ideaSeverity": "WARNING",
+                    "qodanaSeverity": "High"
+                  }
+                },
+                "relationships": [
+                  {
+                    "target": {
+                      "id": "JavaScript and TypeScript/Control flow issues",
+                      "index": 1,
                       "toolComponent": {
                         "name": "QDGO"
                       }
@@ -2724,39 +2724,6 @@
                 ]
               },
               {
-                "id": "NpmUsedModulesInstalled",
-                "shortDescription": {
-                  "text": "Missing module dependency"
-                },
-                "fullDescription": {
-                  "text": "Reports a module from a 'require()' call or an 'import' statement that is not installed or is not listed in package.json dependencies. Suggests installing the module and/or including it into package.json. For 'require()' calls, works only in the files from the scope of Node.js Core JavaScript library.",
-                  "markdown": "Reports a module from a `require()` call or an `import` statement that is not installed or is not listed in package.json dependencies.\n\nSuggests installing the module and/or including it into package.json.\n\nFor `require()` calls, works only in the files from the scope of *Node.js Core* JavaScript library."
-                },
-                "defaultConfiguration": {
-                  "enabled": false,
-                  "level": "note",
-                  "parameters": {
-                    "suppressToolId": "NpmUsedModulesInstalled",
-                    "ideaSeverity": "WEAK WARNING",
-                    "qodanaSeverity": "Moderate"
-                  }
-                },
-                "relationships": [
-                  {
-                    "target": {
-                      "id": "JavaScript and TypeScript/Imports and dependencies",
-                      "index": 43,
-                      "toolComponent": {
-                        "name": "QDGO"
-                      }
-                    },
-                    "kinds": [
-                      "superset"
-                    ]
-                  }
-                ]
-              },
-              {
                 "id": "UnusedCatchParameterJS",
                 "shortDescription": {
                   "text": "Unused 'catch' parameter"
@@ -2779,6 +2746,39 @@
                     "target": {
                       "id": "JavaScript and TypeScript/Try statement issues",
                       "index": 27,
+                      "toolComponent": {
+                        "name": "QDGO"
+                      }
+                    },
+                    "kinds": [
+                      "superset"
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "NpmUsedModulesInstalled",
+                "shortDescription": {
+                  "text": "Missing module dependency"
+                },
+                "fullDescription": {
+                  "text": "Reports a module from a 'require()' call or an 'import' statement that is not installed or is not listed in package.json dependencies. Suggests installing the module and/or including it into package.json. For 'require()' calls, works only in the files from the scope of Node.js Core JavaScript library.",
+                  "markdown": "Reports a module from a `require()` call or an `import` statement that is not installed or is not listed in package.json dependencies.\n\nSuggests installing the module and/or including it into package.json.\n\nFor `require()` calls, works only in the files from the scope of *Node.js Core* JavaScript library."
+                },
+                "defaultConfiguration": {
+                  "enabled": false,
+                  "level": "note",
+                  "parameters": {
+                    "suppressToolId": "NpmUsedModulesInstalled",
+                    "ideaSeverity": "WEAK WARNING",
+                    "qodanaSeverity": "Moderate"
+                  }
+                },
+                "relationships": [
+                  {
+                    "target": {
+                      "id": "JavaScript and TypeScript/Imports and dependencies",
+                      "index": 43,
                       "toolComponent": {
                         "name": "QDGO"
                       }
@@ -5001,28 +5001,28 @@
                 ]
               },
               {
-                "id": "JSIncompatibleTypesComparison",
+                "id": "JSAnnotator",
                 "shortDescription": {
-                  "text": "Comparison of expressions having incompatible types"
+                  "text": "ECMAScript specification is not followed"
                 },
                 "fullDescription": {
-                  "text": "Reports a comparison with operands of incompatible types or an operand with a type without possible common values.",
-                  "markdown": "Reports a comparison with operands of incompatible types or an operand with a type without possible common values."
+                  "text": "Reports basic syntax issues and inconsistencies with language specification, such as invalid usages of keywords, usages of incompatible numeric format, or multiple parameters to getters/setters. Generally, such errors must always be reported and shouldn't be disabled. But in some cases, such as issues due to the dynamic nature of JavaScript, the use of not yet supported language features, or bugs in IDE's checker, it may be handy to disable reporting these very basic errors.",
+                  "markdown": "Reports basic syntax issues and inconsistencies with language specification, such as invalid usages of keywords, usages of incompatible numeric format, or multiple parameters to getters/setters.   \nGenerally, such errors must always be reported and shouldn't be disabled. But in some cases, such as issues due to the dynamic nature of JavaScript, the use of not yet supported language features, or bugs in IDE's checker, it may be handy to disable reporting these very basic errors."
                 },
                 "defaultConfiguration": {
                   "enabled": false,
-                  "level": "note",
+                  "level": "error",
                   "parameters": {
-                    "suppressToolId": "JSIncompatibleTypesComparison",
-                    "ideaSeverity": "WEAK WARNING",
-                    "qodanaSeverity": "Moderate"
+                    "suppressToolId": "JSAnnotator",
+                    "ideaSeverity": "ERROR",
+                    "qodanaSeverity": "Critical"
                   }
                 },
                 "relationships": [
                   {
                     "target": {
-                      "id": "JavaScript and TypeScript/Probable bugs",
-                      "index": 13,
+                      "id": "JavaScript and TypeScript/General",
+                      "index": 10,
                       "toolComponent": {
                         "name": "QDGO"
                       }
@@ -5067,28 +5067,28 @@
                 ]
               },
               {
-                "id": "JSAnnotator",
+                "id": "JSIncompatibleTypesComparison",
                 "shortDescription": {
-                  "text": "ECMAScript specification is not followed"
+                  "text": "Comparison of expressions having incompatible types"
                 },
                 "fullDescription": {
-                  "text": "Reports basic syntax issues and inconsistencies with language specification, such as invalid usages of keywords, usages of incompatible numeric format, or multiple parameters to getters/setters. Generally, such errors must always be reported and shouldn't be disabled. But in some cases, such as issues due to the dynamic nature of JavaScript, the use of not yet supported language features, or bugs in IDE's checker, it may be handy to disable reporting these very basic errors.",
-                  "markdown": "Reports basic syntax issues and inconsistencies with language specification, such as invalid usages of keywords, usages of incompatible numeric format, or multiple parameters to getters/setters.   \nGenerally, such errors must always be reported and shouldn't be disabled. But in some cases, such as issues due to the dynamic nature of JavaScript, the use of not yet supported language features, or bugs in IDE's checker, it may be handy to disable reporting these very basic errors."
+                  "text": "Reports a comparison with operands of incompatible types or an operand with a type without possible common values.",
+                  "markdown": "Reports a comparison with operands of incompatible types or an operand with a type without possible common values."
                 },
                 "defaultConfiguration": {
                   "enabled": false,
-                  "level": "error",
+                  "level": "note",
                   "parameters": {
-                    "suppressToolId": "JSAnnotator",
-                    "ideaSeverity": "ERROR",
-                    "qodanaSeverity": "Critical"
+                    "suppressToolId": "JSIncompatibleTypesComparison",
+                    "ideaSeverity": "WEAK WARNING",
+                    "qodanaSeverity": "Moderate"
                   }
                 },
                 "relationships": [
                   {
                     "target": {
-                      "id": "JavaScript and TypeScript/General",
-                      "index": 10,
+                      "id": "JavaScript and TypeScript/Probable bugs",
+                      "index": 13,
                       "toolComponent": {
                         "name": "QDGO"
                       }
@@ -6981,39 +6981,6 @@
                 ]
               },
               {
-                "id": "IfStatementWithIdenticalBranchesJS",
-                "shortDescription": {
-                  "text": "'if' statement with identical branches"
-                },
-                "fullDescription": {
-                  "text": "Reports an 'if' statement with identical 'then' and 'else' branches. Such statements are almost certainly an error.",
-                  "markdown": "Reports an `if` statement with identical `then` and `else` branches. Such statements are almost certainly an error."
-                },
-                "defaultConfiguration": {
-                  "enabled": false,
-                  "level": "warning",
-                  "parameters": {
-                    "suppressToolId": "IfStatementWithIdenticalBranchesJS",
-                    "ideaSeverity": "WARNING",
-                    "qodanaSeverity": "High"
-                  }
-                },
-                "relationships": [
-                  {
-                    "target": {
-                      "id": "JavaScript and TypeScript/Control flow issues",
-                      "index": 1,
-                      "toolComponent": {
-                        "name": "QDGO"
-                      }
-                    },
-                    "kinds": [
-                      "superset"
-                    ]
-                  }
-                ]
-              },
-              {
                 "id": "PlatformDetectionJS",
                 "shortDescription": {
                   "text": "Inaccurate platform detection"
@@ -7036,6 +7003,39 @@
                     "target": {
                       "id": "JavaScript and TypeScript/DOM issues",
                       "index": 48,
+                      "toolComponent": {
+                        "name": "QDGO"
+                      }
+                    },
+                    "kinds": [
+                      "superset"
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "IfStatementWithIdenticalBranchesJS",
+                "shortDescription": {
+                  "text": "'if' statement with identical branches"
+                },
+                "fullDescription": {
+                  "text": "Reports an 'if' statement with identical 'then' and 'else' branches. Such statements are almost certainly an error.",
+                  "markdown": "Reports an `if` statement with identical `then` and `else` branches. Such statements are almost certainly an error."
+                },
+                "defaultConfiguration": {
+                  "enabled": false,
+                  "level": "warning",
+                  "parameters": {
+                    "suppressToolId": "IfStatementWithIdenticalBranchesJS",
+                    "ideaSeverity": "WARNING",
+                    "qodanaSeverity": "High"
+                  }
+                },
+                "relationships": [
+                  {
+                    "target": {
+                      "id": "JavaScript and TypeScript/Control flow issues",
+                      "index": 1,
                       "toolComponent": {
                         "name": "QDGO"
                       }
@@ -7278,39 +7278,6 @@
                 ]
               },
               {
-                "id": "TrivialConditionalJS",
-                "shortDescription": {
-                  "text": "Redundant conditional expression"
-                },
-                "fullDescription": {
-                  "text": "Reports a conditional expression of the form 'condition ? true : false\ncondition ? false : true' These expressions may be safely converted to 'condition\n!condition'",
-                  "markdown": "Reports a conditional expression of the form\n\n\n    condition ? true : false\n    condition ? false : true\n\n\nThese expressions may be safely converted to\n\n\n    condition\n    !condition\n"
-                },
-                "defaultConfiguration": {
-                  "enabled": false,
-                  "level": "warning",
-                  "parameters": {
-                    "suppressToolId": "RedundantConditionalExpressionJS",
-                    "ideaSeverity": "WARNING",
-                    "qodanaSeverity": "High"
-                  }
-                },
-                "relationships": [
-                  {
-                    "target": {
-                      "id": "JavaScript and TypeScript/Control flow issues",
-                      "index": 1,
-                      "toolComponent": {
-                        "name": "QDGO"
-                      }
-                    },
-                    "kinds": [
-                      "superset"
-                    ]
-                  }
-                ]
-              },
-              {
                 "id": "TypeScriptDuplicateUnionOrIntersectionType",
                 "shortDescription": {
                   "text": "Duplicate union or intersection type component"
@@ -7333,6 +7300,39 @@
                     "target": {
                       "id": "JavaScript and TypeScript/TypeScript",
                       "index": 22,
+                      "toolComponent": {
+                        "name": "QDGO"
+                      }
+                    },
+                    "kinds": [
+                      "superset"
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "TrivialConditionalJS",
+                "shortDescription": {
+                  "text": "Redundant conditional expression"
+                },
+                "fullDescription": {
+                  "text": "Reports a conditional expression of the form 'condition ? true : false\ncondition ? false : true' These expressions may be safely converted to 'condition\n!condition'",
+                  "markdown": "Reports a conditional expression of the form\n\n\n    condition ? true : false\n    condition ? false : true\n\n\nThese expressions may be safely converted to\n\n\n    condition\n    !condition\n"
+                },
+                "defaultConfiguration": {
+                  "enabled": false,
+                  "level": "warning",
+                  "parameters": {
+                    "suppressToolId": "RedundantConditionalExpressionJS",
+                    "ideaSeverity": "WARNING",
+                    "qodanaSeverity": "High"
+                  }
+                },
+                "relationships": [
+                  {
+                    "target": {
+                      "id": "JavaScript and TypeScript/Control flow issues",
+                      "index": 1,
                       "toolComponent": {
                         "name": "QDGO"
                       }
@@ -7377,39 +7377,6 @@
                 ]
               },
               {
-                "id": "ES6UnusedImports",
-                "shortDescription": {
-                  "text": "Unused import"
-                },
-                "fullDescription": {
-                  "text": "Reports a redundant 'import' statement. This is usually the case if the imported symbols are not used in the source file. To avoid side-effects, consider using bare import 'import 'packageName'' instead of the regular one.",
-                  "markdown": "Reports a redundant `import` statement. This is usually the case if the imported symbols are not used in the source file. To avoid side-effects, consider using bare import `import 'packageName'` instead of the regular one."
-                },
-                "defaultConfiguration": {
-                  "enabled": false,
-                  "level": "warning",
-                  "parameters": {
-                    "suppressToolId": "ES6UnusedImports",
-                    "ideaSeverity": "WARNING",
-                    "qodanaSeverity": "High"
-                  }
-                },
-                "relationships": [
-                  {
-                    "target": {
-                      "id": "JavaScript and TypeScript/Imports and dependencies",
-                      "index": 43,
-                      "toolComponent": {
-                        "name": "QDGO"
-                      }
-                    },
-                    "kinds": [
-                      "superset"
-                    ]
-                  }
-                ]
-              },
-              {
                 "id": "JSMissingSwitchBranches",
                 "shortDescription": {
                   "text": "'switch' statement has missing branches"
@@ -7432,6 +7399,39 @@
                     "target": {
                       "id": "JavaScript and TypeScript/Switch statement issues",
                       "index": 47,
+                      "toolComponent": {
+                        "name": "QDGO"
+                      }
+                    },
+                    "kinds": [
+                      "superset"
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "ES6UnusedImports",
+                "shortDescription": {
+                  "text": "Unused import"
+                },
+                "fullDescription": {
+                  "text": "Reports a redundant 'import' statement. This is usually the case if the imported symbols are not used in the source file. To avoid side-effects, consider using bare import 'import 'packageName'' instead of the regular one.",
+                  "markdown": "Reports a redundant `import` statement. This is usually the case if the imported symbols are not used in the source file. To avoid side-effects, consider using bare import `import 'packageName'` instead of the regular one."
+                },
+                "defaultConfiguration": {
+                  "enabled": false,
+                  "level": "warning",
+                  "parameters": {
+                    "suppressToolId": "ES6UnusedImports",
+                    "ideaSeverity": "WARNING",
+                    "qodanaSeverity": "High"
+                  }
+                },
+                "relationships": [
+                  {
+                    "target": {
+                      "id": "JavaScript and TypeScript/Imports and dependencies",
+                      "index": 43,
                       "toolComponent": {
                         "name": "QDGO"
                       }
@@ -9777,39 +9777,6 @@
                 ]
               },
               {
-                "id": "GoRedundantBlankArgInRange",
-                "shortDescription": {
-                  "text": "Redundant blank argument in range"
-                },
-                "fullDescription": {
-                  "text": "Reports optional blank variables in range loops. When you use the 'range' loop to iterate over a slice, two values are returned for each iteration. The first is the index number, and the second is a copy of the element at that index. If you do not need the second value, you can skip this element instead of using a blank identifier. Example: 'for a, _ = range v {} // `for a, _ =` is the same as `for a =`' To remove the blank identifier, you can use the Delete blank argument quick-fix. After the quick-fix is applied, the code will look as follows: 'for a = range v {}'",
-                  "markdown": "Reports optional blank variables in range loops.\n\nWhen you use the `range` loop to iterate over a slice, two values are returned for each iteration. The first is the index\nnumber, and the second is a copy of the element at that index. If you do not need the second value, you can skip this element instead of\nusing a blank identifier.\n\nExample:\n\n    for a, _ = range v {} // `for a, _ =` is the same as `for a =`\n\nTo remove the blank identifier, you can use the **Delete blank argument** quick-fix. After the quick-fix is applied, the code will\nlook as follows:\n\n    for a = range v {}\n"
-                },
-                "defaultConfiguration": {
-                  "enabled": true,
-                  "level": "warning",
-                  "parameters": {
-                    "suppressToolId": "GoRedundantBlankArgInRange",
-                    "ideaSeverity": "WARNING",
-                    "qodanaSeverity": "High"
-                  }
-                },
-                "relationships": [
-                  {
-                    "target": {
-                      "id": "Go/Declaration redundancy",
-                      "index": 5,
-                      "toolComponent": {
-                        "name": "QDGO"
-                      }
-                    },
-                    "kinds": [
-                      "superset"
-                    ]
-                  }
-                ]
-              },
-              {
                 "id": "GoCommentStart",
                 "shortDescription": {
                   "text": "Comment of exported element starts with the incorrect name"
@@ -9832,6 +9799,39 @@
                     "target": {
                       "id": "Go/Code style issues",
                       "index": 31,
+                      "toolComponent": {
+                        "name": "QDGO"
+                      }
+                    },
+                    "kinds": [
+                      "superset"
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "GoRedundantBlankArgInRange",
+                "shortDescription": {
+                  "text": "Redundant blank argument in range"
+                },
+                "fullDescription": {
+                  "text": "Reports optional blank variables in range loops. When you use the 'range' loop to iterate over a slice, two values are returned for each iteration. The first is the index number, and the second is a copy of the element at that index. If you do not need the second value, you can skip this element instead of using a blank identifier. Example: 'for a, _ = range v {} // `for a, _ =` is the same as `for a =`' To remove the blank identifier, you can use the Delete blank argument quick-fix. After the quick-fix is applied, the code will look as follows: 'for a = range v {}'",
+                  "markdown": "Reports optional blank variables in range loops.\n\nWhen you use the `range` loop to iterate over a slice, two values are returned for each iteration. The first is the index\nnumber, and the second is a copy of the element at that index. If you do not need the second value, you can skip this element instead of\nusing a blank identifier.\n\nExample:\n\n    for a, _ = range v {} // `for a, _ =` is the same as `for a =`\n\nTo remove the blank identifier, you can use the **Delete blank argument** quick-fix. After the quick-fix is applied, the code will\nlook as follows:\n\n    for a = range v {}\n"
+                },
+                "defaultConfiguration": {
+                  "enabled": true,
+                  "level": "warning",
+                  "parameters": {
+                    "suppressToolId": "GoRedundantBlankArgInRange",
+                    "ideaSeverity": "WARNING",
+                    "qodanaSeverity": "High"
+                  }
+                },
+                "relationships": [
+                  {
+                    "target": {
+                      "id": "Go/Declaration redundancy",
+                      "index": 5,
                       "toolComponent": {
                         "name": "QDGO"
                       }
@@ -11196,39 +11196,6 @@
                 ]
               },
               {
-                "id": "GoTypeParameterInLowerCase",
-                "shortDescription": {
-                  "text": "Type parameter is declared in lowercase"
-                },
-                "fullDescription": {
-                  "text": "Reports type parameters that are declared in lowercase. Examples in the official Go documentation use type parameters in uppercase. This inspection follows this uppercase rule for type parameters. 'func PrintSlice[t any](s []t) {\n    for _, v := range s{\n        print(v)\n    }\n}' The type parameter 't' is declared in lowercase and thus will be reported.",
-                  "markdown": "Reports type parameters that are declared in lowercase.\n\nExamples in the official Go documentation use type parameters in uppercase.\nThis inspection follows this uppercase rule for type parameters.\n\n    func PrintSlice[t any](s []t) {\n        for _, v := range s{\n            print(v)\n        }\n    }\n\nThe type parameter `t` is declared in lowercase and thus will be reported."
-                },
-                "defaultConfiguration": {
-                  "enabled": false,
-                  "level": "note",
-                  "parameters": {
-                    "suppressToolId": "GoTypeParameterInLowerCase",
-                    "ideaSeverity": "INFORMATION",
-                    "qodanaSeverity": "Info"
-                  }
-                },
-                "relationships": [
-                  {
-                    "target": {
-                      "id": "Go/Code style issues",
-                      "index": 31,
-                      "toolComponent": {
-                        "name": "QDGO"
-                      }
-                    },
-                    "kinds": [
-                      "superset"
-                    ]
-                  }
-                ]
-              },
-              {
                 "id": "GoStringsReplaceCount",
                 "shortDescription": {
                   "text": "Incorrect 'strings.Replace' count argument"
@@ -11251,6 +11218,39 @@
                     "target": {
                       "id": "Go/Probable bugs",
                       "index": 4,
+                      "toolComponent": {
+                        "name": "QDGO"
+                      }
+                    },
+                    "kinds": [
+                      "superset"
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "GoTypeParameterInLowerCase",
+                "shortDescription": {
+                  "text": "Type parameter is declared in lowercase"
+                },
+                "fullDescription": {
+                  "text": "Reports type parameters that are declared in lowercase. Examples in the official Go documentation use type parameters in uppercase. This inspection follows this uppercase rule for type parameters. 'func PrintSlice[t any](s []t) {\n    for _, v := range s{\n        print(v)\n    }\n}' The type parameter 't' is declared in lowercase and thus will be reported.",
+                  "markdown": "Reports type parameters that are declared in lowercase.\n\nExamples in the official Go documentation use type parameters in uppercase.\nThis inspection follows this uppercase rule for type parameters.\n\n    func PrintSlice[t any](s []t) {\n        for _, v := range s{\n            print(v)\n        }\n    }\n\nThe type parameter `t` is declared in lowercase and thus will be reported."
+                },
+                "defaultConfiguration": {
+                  "enabled": false,
+                  "level": "note",
+                  "parameters": {
+                    "suppressToolId": "GoTypeParameterInLowerCase",
+                    "ideaSeverity": "INFORMATION",
+                    "qodanaSeverity": "Info"
+                  }
+                },
+                "relationships": [
+                  {
+                    "target": {
+                      "id": "Go/Code style issues",
+                      "index": 31,
                       "toolComponent": {
                         "name": "QDGO"
                       }
@@ -15612,7 +15612,7 @@
       "versionControlProvenance": [
         {
           "repositoryUri": "https://github.com/todo-lists-app/api.git",
-          "revisionId": "e9a7bcf78fd3121a5e9770258afa933f9bd87ff3",
+          "revisionId": "b94e378097be0af547e49cb9f2bd6edc4c4ae385",
           "branch": "refs/heads/main",
           "properties": {
             "repoUrl": "https://github.com/todo-lists-app/api.git",
@@ -15623,60 +15623,6 @@
         }
       ],
       "results": [
-        {
-          "ruleId": "GoImportUsedAsName",
-          "kind": "fail",
-          "level": "warning",
-          "message": {
-            "text": "Variable 'mongo' collides with imported package name",
-            "markdown": "Variable `mongo` collides with imported package name"
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "internal/config/mongo.go",
-                  "uriBaseId": "SRCROOT"
-                },
-                "region": {
-                  "startLine": 34,
-                  "startColumn": 2,
-                  "charOffset": 913,
-                  "charLength": 5,
-                  "snippet": {
-                    "text": "mongo"
-                  },
-                  "sourceLanguage": "go"
-                },
-                "contextRegion": {
-                  "startLine": 32,
-                  "startColumn": 1,
-                  "charOffset": 839,
-                  "charLength": 134,
-                  "snippet": {
-                    "text": "// BuildMongo builds the Mongo config\nfunc BuildMongo(c *Config) error {\n\tmongo := &Mongo{}\n\n\tif err := env.Parse(mongo); err != nil {"
-                  }
-                }
-              },
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "project",
-                  "kind": "module"
-                }
-              ]
-            }
-          ],
-          "partialFingerprints": {
-            "equalIndicator/v1": "02b16c39b0dec58f7deaba668b36e43a97719bb90d057f10df9729ec55b41160"
-          },
-          "properties": {
-            "ideaSeverity": "WARNING",
-            "qodanaSeverity": "High",
-            "tags": [
-              "go"
-            ]
-          }
-        },
         {
           "ruleId": "GoMixedReceiverTypes",
           "kind": "fail",
@@ -15851,60 +15797,6 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "internal/service/service.go",
-                  "uriBaseId": "SRCROOT"
-                },
-                "region": {
-                  "startLine": 17,
-                  "startColumn": 2,
-                  "charOffset": 359,
-                  "charLength": 11,
-                  "snippet": {
-                    "text": "healthcheck"
-                  },
-                  "sourceLanguage": "go"
-                },
-                "contextRegion": {
-                  "startLine": 15,
-                  "startColumn": 1,
-                  "charOffset": 293,
-                  "charLength": 207,
-                  "snippet": {
-                    "text": "\t\"github.com/go-chi/chi/v5/middleware\"\n\t\"github.com/go-chi/cors\"\n\thealthcheck \"github.com/keloran/go-healthcheck\"\n\tprobe \"github.com/keloran/go-probe\"\n\t\"github.com/todo-lists-app/todo-lists-api/internal/api\""
-                  }
-                }
-              },
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "project",
-                  "kind": "module"
-                }
-              ]
-            }
-          ],
-          "partialFingerprints": {
-            "equalIndicator/v1": "2059e2778afe2baa8cbac5198a5fb63489cdbf11b49c6c5cab819538294e303b"
-          },
-          "properties": {
-            "ideaSeverity": "WEAK WARNING",
-            "qodanaSeverity": "Moderate",
-            "tags": [
-              "go"
-            ]
-          }
-        },
-        {
-          "ruleId": "GoRedundantImportAlias",
-          "kind": "fail",
-          "level": "note",
-          "message": {
-            "text": "Redundant alias",
-            "markdown": "Redundant alias"
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
                   "uri": "internal/config/vault.go",
                   "uriBaseId": "SRCROOT"
                 },
@@ -15992,114 +15884,6 @@
           ],
           "partialFingerprints": {
             "equalIndicator/v1": "4f3824c85ef5764cb443d9093a0be7e67720497a6bbb3c24a326b45c98de271d"
-          },
-          "properties": {
-            "ideaSeverity": "WEAK WARNING",
-            "qodanaSeverity": "Moderate",
-            "tags": [
-              "go"
-            ]
-          }
-        },
-        {
-          "ruleId": "GoRedundantImportAlias",
-          "kind": "fail",
-          "level": "note",
-          "message": {
-            "text": "Redundant alias",
-            "markdown": "Redundant alias"
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "internal/service/service.go",
-                  "uriBaseId": "SRCROOT"
-                },
-                "region": {
-                  "startLine": 18,
-                  "startColumn": 2,
-                  "charOffset": 408,
-                  "charLength": 5,
-                  "snippet": {
-                    "text": "probe"
-                  },
-                  "sourceLanguage": "go"
-                },
-                "contextRegion": {
-                  "startLine": 16,
-                  "startColumn": 1,
-                  "charOffset": 332,
-                  "charLength": 228,
-                  "snippet": {
-                    "text": "\t\"github.com/go-chi/cors\"\n\thealthcheck \"github.com/keloran/go-healthcheck\"\n\tprobe \"github.com/keloran/go-probe\"\n\t\"github.com/todo-lists-app/todo-lists-api/internal/api\"\n\t\"github.com/todo-lists-app/todo-lists-api/internal/config\""
-                  }
-                }
-              },
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "project",
-                  "kind": "module"
-                }
-              ]
-            }
-          ],
-          "partialFingerprints": {
-            "equalIndicator/v1": "72c889393f1e71d802c50da0e65196bf3216040426d59facb7c30c303ffcb1f0"
-          },
-          "properties": {
-            "ideaSeverity": "WEAK WARNING",
-            "qodanaSeverity": "Moderate",
-            "tags": [
-              "go"
-            ]
-          }
-        },
-        {
-          "ruleId": "GoRedundantImportAlias",
-          "kind": "fail",
-          "level": "note",
-          "message": {
-            "text": "Redundant alias",
-            "markdown": "Redundant alias"
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "internal/service/service.go",
-                  "uriBaseId": "SRCROOT"
-                },
-                "region": {
-                  "startLine": 14,
-                  "startColumn": 2,
-                  "charOffset": 262,
-                  "charLength": 3,
-                  "snippet": {
-                    "text": "chi"
-                  },
-                  "sourceLanguage": "go"
-                },
-                "contextRegion": {
-                  "startLine": 12,
-                  "startColumn": 1,
-                  "charOffset": 220,
-                  "charLength": 137,
-                  "snippet": {
-                    "text": "\n\t\"github.com/bugfixes/go-bugfixes/logs\"\n\tchi \"github.com/go-chi/chi/v5\"\n\t\"github.com/go-chi/chi/v5/middleware\"\n\t\"github.com/go-chi/cors\""
-                  }
-                }
-              },
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "project",
-                  "kind": "module"
-                }
-              ]
-            }
-          ],
-          "partialFingerprints": {
-            "equalIndicator/v1": "93fce6237cd72313f0cc0062387be94f1c6e7a5b9e0da1ee0daf7d67d3cb224b"
           },
           "properties": {
             "ideaSeverity": "WEAK WARNING",
@@ -16397,7 +16181,7 @@
                 "region": {
                   "startLine": 178,
                   "startColumn": 23,
-                  "charOffset": 4484,
+                  "charOffset": 4462,
                   "charLength": 6,
                   "snippet": {
                     "text": "Encode"
@@ -16407,7 +16191,7 @@
                 "contextRegion": {
                   "startLine": 176,
                   "startColumn": 1,
-                  "charOffset": 4407,
+                  "charOffset": 4385,
                   "charLength": 96,
                   "snippet": {
                     "text": "\n\t\t\tw.Header().Set(\"Content-Type\", \"application/json\")\n\t\t\tjson.NewEncoder(w).Encode(respJ)\n\t\t})\n"
@@ -16423,7 +16207,7 @@
             }
           ],
           "partialFingerprints": {
-            "equalIndicator/v1": "47d886aca552b190d58b05c85870044e9982768d4d33b20cd0d5442fb3b85888"
+            "equalIndicator/v1": "60c4a5ba33b90c7107184208e50510efa2ec905b5e1f0ebf25ad4ea1b692ec73"
           },
           "properties": {
             "ideaSeverity": "WARNING",
@@ -16667,7 +16451,7 @@
                 "region": {
                   "startLine": 43,
                   "startColumn": 43,
-                  "charOffset": 940,
+                  "charOffset": 918,
                   "charLength": 18,
                   "snippet": {
                     "text": "errChan chan error"
@@ -16677,7 +16461,7 @@
                 "contextRegion": {
                   "startLine": 41,
                   "startColumn": 1,
-                  "charOffset": 895,
+                  "charOffset": 873,
                   "charLength": 69,
                   "snippet": {
                     "text": "}\n\nfunc getNotifications(cfg *config.Config, errChan chan error) {\n\n}"
@@ -16693,7 +16477,7 @@
             }
           ],
           "partialFingerprints": {
-            "equalIndicator/v1": "6aa4a21fc12b1e7dc4a0b89e77d8436fa3723500c02ea974ded0fc63e5f23d5b"
+            "equalIndicator/v1": "6fb7cace9a8dd15f275090d65903b6230e99177bc7c1ecb2fbcb6965bc92f8f4"
           },
           "properties": {
             "ideaSeverity": "WARNING",
@@ -16721,7 +16505,7 @@
                 "region": {
                   "startLine": 43,
                   "startColumn": 23,
-                  "charOffset": 920,
+                  "charOffset": 898,
                   "charLength": 18,
                   "snippet": {
                     "text": "cfg *config.Config"
@@ -16731,7 +16515,7 @@
                 "contextRegion": {
                   "startLine": 41,
                   "startColumn": 1,
-                  "charOffset": 895,
+                  "charOffset": 873,
                   "charLength": 69,
                   "snippet": {
                     "text": "}\n\nfunc getNotifications(cfg *config.Config, errChan chan error) {\n\n}"
@@ -16747,7 +16531,7 @@
             }
           ],
           "partialFingerprints": {
-            "equalIndicator/v1": "e7f26881e26627534fe55b6e93a574d00b35127715ae55a7b1f65177a2e425c5"
+            "equalIndicator/v1": "f793153970a87f8054d4ec072b06cd7ec0e40a551efb2e5ed53025bc6acec95e"
           },
           "properties": {
             "ideaSeverity": "WARNING",
@@ -16773,9 +16557,9 @@
                   "uriBaseId": "SRCROOT"
                 },
                 "region": {
-                  "startLine": 25,
+                  "startLine": 26,
                   "startColumn": 2,
-                  "charOffset": 755,
+                  "charOffset": 805,
                   "charLength": 26,
                   "snippet": {
                     "text": "github.com/golang/protobuf"
@@ -16783,12 +16567,12 @@
                   "sourceLanguage": "vgo"
                 },
                 "contextRegion": {
-                  "startLine": 23,
+                  "startLine": 24,
                   "startColumn": 1,
-                  "charOffset": 651,
+                  "charOffset": 701,
                   "charLength": 237,
                   "snippet": {
-                    "text": "\tgithub.com/go-ping/ping v1.1.0 // indirect\n\tgithub.com/golang-jwt/jwt v3.2.2+incompatible // indirect\n\tgithub.com/golang/protobuf v1.5.3 // indirect\n\tgithub.com/golang/snappy v0.0.1 // indirect\n\tgithub.com/google/uuid v1.3.0 // indirect"
+                    "text": "\tgithub.com/go-ping/ping v1.1.0 // indirect\n\tgithub.com/golang-jwt/jwt v3.2.2+incompatible // indirect\n\tgithub.com/golang/protobuf v1.5.3 // indirect\n\tgithub.com/golang/snappy v0.0.4 // indirect\n\tgithub.com/google/uuid v1.3.0 // indirect"
                   }
                 }
               },
@@ -16801,7 +16585,7 @@
             }
           ],
           "partialFingerprints": {
-            "equalIndicator/v1": "34ab40862916ed0989b23d45caf69e44e90fc62c11676cad9f0dad3e0acb44f3"
+            "equalIndicator/v1": "5d140725889b9631c44037204e8c86b52d10dccceb0b58235f1691b5b94a3562"
           },
           "properties": {
             "ideaSeverity": "WARNING",
@@ -16812,12 +16596,12 @@
           }
         },
         {
-          "ruleId": "VgoDependencyUpdateAvailable",
+          "ruleId": "VgoUnusedDependency",
           "kind": "fail",
-          "level": "note",
+          "level": "warning",
           "message": {
-            "text": "Newer version of google.golang.org/protobuf@v1.30.0 is available: v1.31.0",
-            "markdown": "Newer version of google.golang.org/protobuf@v1.30.0 is available: v1.31.0"
+            "text": "Unused dependency",
+            "markdown": "Unused dependency"
           },
           "locations": [
             {
@@ -16827,508 +16611,22 @@
                   "uriBaseId": "SRCROOT"
                 },
                 "region": {
+                  "startLine": 55,
+                  "startColumn": 2,
+                  "charOffset": 2291,
+                  "charLength": 45,
+                  "snippet": {
+                    "text": "gopkg.in/square/go-jose.v2 v2.6.0 // indirect"
+                  },
+                  "sourceLanguage": "vgo"
+                },
+                "contextRegion": {
                   "startLine": 53,
-                  "startColumn": 29,
-                  "charOffset": 2276,
-                  "charLength": 7,
-                  "snippet": {
-                    "text": "v1.30.0"
-                  },
-                  "sourceLanguage": "vgo"
-                },
-                "contextRegion": {
-                  "startLine": 51,
                   "startColumn": 1,
-                  "charOffset": 2092,
-                  "charLength": 252,
-                  "snippet": {
-                    "text": "\tgolang.org/x/time v0.0.0-20200416051211-89c76fbcd5d1 // indirect\n\tgoogle.golang.org/genproto/googleapis/rpc v0.0.0-20230525234030-28d5490b6b19 // indirect\n\tgoogle.golang.org/protobuf v1.30.0 // indirect\n\tgopkg.in/square/go-jose.v2 v2.5.1 // indirect\n)"
-                  }
-                }
-              },
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "project",
-                  "kind": "module"
-                }
-              ]
-            }
-          ],
-          "partialFingerprints": {
-            "equalIndicator/v1": "03a71f7ae58b8ddba090224051e2c26231c98c624d6332994c2491506dc42b19"
-          },
-          "properties": {
-            "ideaSeverity": "WEAK WARNING",
-            "qodanaSeverity": "Moderate",
-            "tags": [
-              "vgo"
-            ]
-          }
-        },
-        {
-          "ruleId": "VgoDependencyUpdateAvailable",
-          "kind": "fail",
-          "level": "note",
-          "message": {
-            "text": "Newer version of github.com/cenkalti/backoff/v3@v3.0.0 is available: v3.2.2",
-            "markdown": "Newer version of github.com/cenkalti/backoff/v3@v3.0.0 is available: v3.2.2"
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "go.mod",
-                  "uriBaseId": "SRCROOT"
-                },
-                "region": {
-                  "startLine": 21,
-                  "startColumn": 33,
-                  "charOffset": 584,
-                  "charLength": 6,
-                  "snippet": {
-                    "text": "v3.0.0"
-                  },
-                  "sourceLanguage": "vgo"
-                },
-                "contextRegion": {
-                  "startLine": 19,
-                  "startColumn": 1,
-                  "charOffset": 541,
-                  "charLength": 153,
-                  "snippet": {
-                    "text": "\nrequire (\n\tgithub.com/cenkalti/backoff/v3 v3.0.0 // indirect\n\tgithub.com/go-logfmt/logfmt v0.6.0 // indirect\n\tgithub.com/go-ping/ping v1.1.0 // indirect"
-                  }
-                }
-              },
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "project",
-                  "kind": "module"
-                }
-              ]
-            }
-          ],
-          "partialFingerprints": {
-            "equalIndicator/v1": "23aff3ee8ded56cdac85b93b58339fb79da80a2215f1722ff1d7ed3545c36aab"
-          },
-          "properties": {
-            "ideaSeverity": "WEAK WARNING",
-            "qodanaSeverity": "Moderate",
-            "tags": [
-              "vgo"
-            ]
-          }
-        },
-        {
-          "ruleId": "VgoDependencyUpdateAvailable",
-          "kind": "fail",
-          "level": "note",
-          "message": {
-            "text": "Newer version of github.com/hashicorp/vault/api@v1.9.0 is available: v1.9.2",
-            "markdown": "Newer version of github.com/hashicorp/vault/api@v1.9.0 is available: v1.9.2"
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "go.mod",
-                  "uriBaseId": "SRCROOT"
-                },
-                "region": {
-                  "startLine": 37,
-                  "startColumn": 33,
-                  "charOffset": 1423,
-                  "charLength": 6,
-                  "snippet": {
-                    "text": "v1.9.0"
-                  },
-                  "sourceLanguage": "vgo"
-                },
-                "contextRegion": {
-                  "startLine": 35,
-                  "startColumn": 1,
-                  "charOffset": 1293,
-                  "charLength": 251,
-                  "snippet": {
-                    "text": "\tgithub.com/hashicorp/go-sockaddr v1.0.2 // indirect\n\tgithub.com/hashicorp/hcl v1.0.0 // indirect\n\tgithub.com/hashicorp/vault/api v1.9.0 // indirect\n\tgithub.com/klauspost/compress v1.13.6 // indirect\n\tgithub.com/mitchellh/go-homedir v1.1.0 // indirect"
-                  }
-                }
-              },
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "project",
-                  "kind": "module"
-                }
-              ]
-            }
-          ],
-          "partialFingerprints": {
-            "equalIndicator/v1": "253446186c44a65d5635d80dc1e685609918f203055ec931825a446b9c27cbd1"
-          },
-          "properties": {
-            "ideaSeverity": "WEAK WARNING",
-            "qodanaSeverity": "Moderate",
-            "tags": [
-              "vgo"
-            ]
-          }
-        },
-        {
-          "ruleId": "VgoDependencyUpdateAvailable",
-          "kind": "fail",
-          "level": "note",
-          "message": {
-            "text": "Newer version of github.com/montanaflynn/stats@v0.0.0-20171201202039-1bf9dbcd8cbe is available: v0.7.1",
-            "markdown": "Newer version of github.com/montanaflynn/stats@v0.0.0-20171201202039-1bf9dbcd8cbe is available: v0.7.1"
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "go.mod",
-                  "uriBaseId": "SRCROOT"
-                },
-                "region": {
-                  "startLine": 41,
-                  "startColumn": 32,
-                  "charOffset": 1630,
-                  "charLength": 34,
-                  "snippet": {
-                    "text": "v0.0.0-20171201202039-1bf9dbcd8cbe"
-                  },
-                  "sourceLanguage": "vgo"
-                },
-                "contextRegion": {
-                  "startLine": 39,
-                  "startColumn": 1,
-                  "charOffset": 1493,
-                  "charLength": 276,
-                  "snippet": {
-                    "text": "\tgithub.com/mitchellh/go-homedir v1.1.0 // indirect\n\tgithub.com/mitchellh/mapstructure v1.5.0 // indirect\n\tgithub.com/montanaflynn/stats v0.0.0-20171201202039-1bf9dbcd8cbe // indirect\n\tgithub.com/ryanuber/go-glob v1.0.0 // indirect\n\tgithub.com/xdg-go/pbkdf2 v1.0.0 // indirect"
-                  }
-                }
-              },
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "project",
-                  "kind": "module"
-                }
-              ]
-            }
-          ],
-          "partialFingerprints": {
-            "equalIndicator/v1": "3b8997160d7d30d9f19a4591fc59029272f891fe96b79ff8d525317feb1ec38f"
-          },
-          "properties": {
-            "ideaSeverity": "WEAK WARNING",
-            "qodanaSeverity": "Moderate",
-            "tags": [
-              "vgo"
-            ]
-          }
-        },
-        {
-          "ruleId": "VgoDependencyUpdateAvailable",
-          "kind": "fail",
-          "level": "note",
-          "message": {
-            "text": "Newer version of google.golang.org/genproto/googleapis/rpc@v0.0.0-20230525234030-28d5490b6b19 is available: v0.0.0-20230807174057-1744710a1577",
-            "markdown": "Newer version of google.golang.org/genproto/googleapis/rpc@v0.0.0-20230525234030-28d5490b6b19 is available: v0.0.0-20230807174057-1744710a1577"
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "go.mod",
-                  "uriBaseId": "SRCROOT"
-                },
-                "region": {
-                  "startLine": 52,
-                  "startColumn": 44,
-                  "charOffset": 2201,
-                  "charLength": 34,
-                  "snippet": {
-                    "text": "v0.0.0-20230525234030-28d5490b6b19"
-                  },
-                  "sourceLanguage": "vgo"
-                },
-                "contextRegion": {
-                  "startLine": 50,
-                  "startColumn": 1,
-                  "charOffset": 2053,
-                  "charLength": 289,
-                  "snippet": {
-                    "text": "\tgolang.org/x/text v0.12.0 // indirect\n\tgolang.org/x/time v0.0.0-20200416051211-89c76fbcd5d1 // indirect\n\tgoogle.golang.org/genproto/googleapis/rpc v0.0.0-20230525234030-28d5490b6b19 // indirect\n\tgoogle.golang.org/protobuf v1.30.0 // indirect\n\tgopkg.in/square/go-jose.v2 v2.5.1 // indirect"
-                  }
-                }
-              },
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "project",
-                  "kind": "module"
-                }
-              ]
-            }
-          ],
-          "partialFingerprints": {
-            "equalIndicator/v1": "44b6e8de28af7081453b7fd3eef827108d8167c003ee7847f254de6123aecc66"
-          },
-          "properties": {
-            "ideaSeverity": "WEAK WARNING",
-            "qodanaSeverity": "Moderate",
-            "tags": [
-              "vgo"
-            ]
-          }
-        },
-        {
-          "ruleId": "VgoDependencyUpdateAvailable",
-          "kind": "fail",
-          "level": "note",
-          "message": {
-            "text": "Newer version of golang.org/x/sync@v0.2.0 is available: v0.3.0",
-            "markdown": "Newer version of golang.org/x/sync@v0.2.0 is available: v0.3.0"
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "go.mod",
-                  "uriBaseId": "SRCROOT"
-                },
-                "region": {
-                  "startLine": 48,
-                  "startColumn": 20,
-                  "charOffset": 1996,
-                  "charLength": 6,
-                  "snippet": {
-                    "text": "v0.2.0"
-                  },
-                  "sourceLanguage": "vgo"
-                },
-                "contextRegion": {
-                  "startLine": 46,
-                  "startColumn": 1,
-                  "charOffset": 1863,
-                  "charLength": 228,
-                  "snippet": {
-                    "text": "\tgithub.com/youmark/pkcs8 v0.0.0-20181117223130-1be2e3e5546d // indirect\n\tgolang.org/x/crypto v0.12.0 // indirect\n\tgolang.org/x/sync v0.2.0 // indirect\n\tgolang.org/x/sys v0.11.0 // indirect\n\tgolang.org/x/text v0.12.0 // indirect"
-                  }
-                }
-              },
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "project",
-                  "kind": "module"
-                }
-              ]
-            }
-          ],
-          "partialFingerprints": {
-            "equalIndicator/v1": "4786dabc8579325be978852c8c265b4e521a19987aa7fe7ee4a2eae66aa531c0"
-          },
-          "properties": {
-            "ideaSeverity": "WEAK WARNING",
-            "qodanaSeverity": "Moderate",
-            "tags": [
-              "vgo"
-            ]
-          }
-        },
-        {
-          "ruleId": "VgoDependencyUpdateAvailable",
-          "kind": "fail",
-          "level": "note",
-          "message": {
-            "text": "Newer version of github.com/hashicorp/go-retryablehttp@v0.6.6 is available: v0.7.4",
-            "markdown": "Newer version of github.com/hashicorp/go-retryablehttp@v0.6.6 is available: v0.7.4"
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "go.mod",
-                  "uriBaseId": "SRCROOT"
-                },
-                "region": {
-                  "startLine": 31,
-                  "startColumn": 40,
-                  "charOffset": 1086,
-                  "charLength": 6,
-                  "snippet": {
-                    "text": "v0.6.6"
-                  },
-                  "sourceLanguage": "vgo"
-                },
-                "contextRegion": {
-                  "startLine": 29,
-                  "startColumn": 1,
-                  "charOffset": 938,
-                  "charLength": 288,
-                  "snippet": {
-                    "text": "\tgithub.com/hashicorp/go-cleanhttp v0.5.2 // indirect\n\tgithub.com/hashicorp/go-multierror v1.1.1 // indirect\n\tgithub.com/hashicorp/go-retryablehttp v0.6.6 // indirect\n\tgithub.com/hashicorp/go-rootcerts v1.0.2 // indirect\n\tgithub.com/hashicorp/go-secure-stdlib/parseutil v0.1.6 // indirect"
-                  }
-                }
-              },
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "project",
-                  "kind": "module"
-                }
-              ]
-            }
-          ],
-          "partialFingerprints": {
-            "equalIndicator/v1": "55a04afd519409ef6633cae525ba2b023180f74d93c0ce1a5fac160c0dd3cde4"
-          },
-          "properties": {
-            "ideaSeverity": "WEAK WARNING",
-            "qodanaSeverity": "Moderate",
-            "tags": [
-              "vgo"
-            ]
-          }
-        },
-        {
-          "ruleId": "VgoDependencyUpdateAvailable",
-          "kind": "fail",
-          "level": "note",
-          "message": {
-            "text": "Newer version of github.com/youmark/pkcs8@v0.0.0-20181117223130-1be2e3e5546d is available: v0.0.0-20201027041543-1326539a0a0a",
-            "markdown": "Newer version of github.com/youmark/pkcs8@v0.0.0-20181117223130-1be2e3e5546d is available: v0.0.0-20201027041543-1326539a0a0a"
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "go.mod",
-                  "uriBaseId": "SRCROOT"
-                },
-                "region": {
-                  "startLine": 46,
-                  "startColumn": 27,
-                  "charOffset": 1889,
-                  "charLength": 34,
-                  "snippet": {
-                    "text": "v0.0.0-20181117223130-1be2e3e5546d"
-                  },
-                  "sourceLanguage": "vgo"
-                },
-                "contextRegion": {
-                  "startLine": 44,
-                  "startColumn": 1,
-                  "charOffset": 1770,
-                  "charLength": 244,
-                  "snippet": {
-                    "text": "\tgithub.com/xdg-go/scram v1.1.2 // indirect\n\tgithub.com/xdg-go/stringprep v1.0.4 // indirect\n\tgithub.com/youmark/pkcs8 v0.0.0-20181117223130-1be2e3e5546d // indirect\n\tgolang.org/x/crypto v0.12.0 // indirect\n\tgolang.org/x/sync v0.2.0 // indirect"
-                  }
-                }
-              },
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "project",
-                  "kind": "module"
-                }
-              ]
-            }
-          ],
-          "partialFingerprints": {
-            "equalIndicator/v1": "6c92d6357b3912492663ca7ac22512bd4a4d3856374a756b6a41b84cfb2ab717"
-          },
-          "properties": {
-            "ideaSeverity": "WEAK WARNING",
-            "qodanaSeverity": "Moderate",
-            "tags": [
-              "vgo"
-            ]
-          }
-        },
-        {
-          "ruleId": "VgoDependencyUpdateAvailable",
-          "kind": "fail",
-          "level": "note",
-          "message": {
-            "text": "Newer version of golang.org/x/time@v0.0.0-20200416051211-89c76fbcd5d1 is available: v0.3.0",
-            "markdown": "Newer version of golang.org/x/time@v0.0.0-20200416051211-89c76fbcd5d1 is available: v0.3.0"
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "go.mod",
-                  "uriBaseId": "SRCROOT"
-                },
-                "region": {
-                  "startLine": 51,
-                  "startColumn": 20,
-                  "charOffset": 2111,
-                  "charLength": 34,
-                  "snippet": {
-                    "text": "v0.0.0-20200416051211-89c76fbcd5d1"
-                  },
-                  "sourceLanguage": "vgo"
-                },
-                "contextRegion": {
-                  "startLine": 49,
-                  "startColumn": 1,
-                  "charOffset": 2015,
-                  "charLength": 280,
-                  "snippet": {
-                    "text": "\tgolang.org/x/sys v0.11.0 // indirect\n\tgolang.org/x/text v0.12.0 // indirect\n\tgolang.org/x/time v0.0.0-20200416051211-89c76fbcd5d1 // indirect\n\tgoogle.golang.org/genproto/googleapis/rpc v0.0.0-20230525234030-28d5490b6b19 // indirect\n\tgoogle.golang.org/protobuf v1.30.0 // indirect"
-                  }
-                }
-              },
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "project",
-                  "kind": "module"
-                }
-              ]
-            }
-          ],
-          "partialFingerprints": {
-            "equalIndicator/v1": "7a39175eb68a266f807d7e029ef416b61e96279b2b336c2276cba47dbc4b6330"
-          },
-          "properties": {
-            "ideaSeverity": "WEAK WARNING",
-            "qodanaSeverity": "Moderate",
-            "tags": [
-              "vgo"
-            ]
-          }
-        },
-        {
-          "ruleId": "VgoDependencyUpdateAvailable",
-          "kind": "fail",
-          "level": "note",
-          "message": {
-            "text": "Newer version of gopkg.in/square/go-jose.v2@v2.5.1 is available: v2.6.0",
-            "markdown": "Newer version of gopkg.in/square/go-jose.v2@v2.5.1 is available: v2.6.0"
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "go.mod",
-                  "uriBaseId": "SRCROOT"
-                },
-                "region": {
-                  "startLine": 54,
-                  "startColumn": 29,
-                  "charOffset": 2324,
-                  "charLength": 6,
-                  "snippet": {
-                    "text": "v2.5.1"
-                  },
-                  "sourceLanguage": "vgo"
-                },
-                "contextRegion": {
-                  "startLine": 52,
-                  "startColumn": 1,
-                  "charOffset": 2158,
+                  "charOffset": 2152,
                   "charLength": 187,
                   "snippet": {
-                    "text": "\tgoogle.golang.org/genproto/googleapis/rpc v0.0.0-20230525234030-28d5490b6b19 // indirect\n\tgoogle.golang.org/protobuf v1.30.0 // indirect\n\tgopkg.in/square/go-jose.v2 v2.5.1 // indirect\n)\n"
+                    "text": "\tgoogle.golang.org/genproto/googleapis/rpc v0.0.0-20230807174057-1744710a1577 // indirect\n\tgoogle.golang.org/protobuf v1.31.0 // indirect\n\tgopkg.in/square/go-jose.v2 v2.6.0 // indirect\n)\n"
                   }
                 }
               },
@@ -17341,227 +16639,11 @@
             }
           ],
           "partialFingerprints": {
-            "equalIndicator/v1": "8f29e0e96b0140731c69f502ab92c9861b380d984858217c659b9b9c37b7b4ed"
+            "equalIndicator/v1": "b041be84f75f7ad415d624ff5b6d5efa460c26c6186e71e7ae12668b22055cdc"
           },
           "properties": {
-            "ideaSeverity": "WEAK WARNING",
-            "qodanaSeverity": "Moderate",
-            "tags": [
-              "vgo"
-            ]
-          }
-        },
-        {
-          "ruleId": "VgoDependencyUpdateAvailable",
-          "kind": "fail",
-          "level": "note",
-          "message": {
-            "text": "Newer version of github.com/hashicorp/go-secure-stdlib/parseutil@v0.1.6 is available: v0.1.7",
-            "markdown": "Newer version of github.com/hashicorp/go-secure-stdlib/parseutil@v0.1.6 is available: v0.1.7"
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "go.mod",
-                  "uriBaseId": "SRCROOT"
-                },
-                "region": {
-                  "startLine": 33,
-                  "startColumn": 50,
-                  "charOffset": 1208,
-                  "charLength": 6,
-                  "snippet": {
-                    "text": "v0.1.6"
-                  },
-                  "sourceLanguage": "vgo"
-                },
-                "contextRegion": {
-                  "startLine": 31,
-                  "startColumn": 1,
-                  "charOffset": 1047,
-                  "charLength": 298,
-                  "snippet": {
-                    "text": "\tgithub.com/hashicorp/go-retryablehttp v0.6.6 // indirect\n\tgithub.com/hashicorp/go-rootcerts v1.0.2 // indirect\n\tgithub.com/hashicorp/go-secure-stdlib/parseutil v0.1.6 // indirect\n\tgithub.com/hashicorp/go-secure-stdlib/strutil v0.1.2 // indirect\n\tgithub.com/hashicorp/go-sockaddr v1.0.2 // indirect"
-                  }
-                }
-              },
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "project",
-                  "kind": "module"
-                }
-              ]
-            }
-          ],
-          "partialFingerprints": {
-            "equalIndicator/v1": "95cfda8294c2b502a35e7c69c9d67524a04e91b7633214c9cc48783cc411cd95"
-          },
-          "properties": {
-            "ideaSeverity": "WEAK WARNING",
-            "qodanaSeverity": "Moderate",
-            "tags": [
-              "vgo"
-            ]
-          }
-        },
-        {
-          "ruleId": "VgoDependencyUpdateAvailable",
-          "kind": "fail",
-          "level": "note",
-          "message": {
-            "text": "Newer version of github.com/todo-lists-app/protobufs@v0.0.0-20230710081248-476dd05ee743 is available: v0.0.0-20230728215834-aaf52566b992",
-            "markdown": "Newer version of github.com/todo-lists-app/protobufs@v0.0.0-20230710081248-476dd05ee743 is available: v0.0.0-20230728215834-aaf52566b992"
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "go.mod",
-                  "uriBaseId": "SRCROOT"
-                },
-                "region": {
-                  "startLine": 14,
-                  "startColumn": 38,
-                  "charOffset": 409,
-                  "charLength": 34,
-                  "snippet": {
-                    "text": "v0.0.0-20230710081248-476dd05ee743"
-                  },
-                  "sourceLanguage": "vgo"
-                },
-                "contextRegion": {
-                  "startLine": 12,
-                  "startColumn": 1,
-                  "charOffset": 296,
-                  "charLength": 210,
-                  "snippet": {
-                    "text": "\tgithub.com/keloran/go-probe v1.0.0\n\tgithub.com/keloran/vault-helper v0.4.0\n\tgithub.com/todo-lists-app/protobufs v0.0.0-20230710081248-476dd05ee743\n\tgo.mongodb.org/mongo-driver v1.12.1\n\tgolang.org/x/net v0.14.0"
-                  }
-                }
-              },
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "project",
-                  "kind": "module"
-                }
-              ]
-            }
-          ],
-          "partialFingerprints": {
-            "equalIndicator/v1": "9ace6f0911766751dee1d07877defa187c076c4649ccd4662a0a1309f7eb8033"
-          },
-          "properties": {
-            "ideaSeverity": "WEAK WARNING",
-            "qodanaSeverity": "Moderate",
-            "tags": [
-              "vgo"
-            ]
-          }
-        },
-        {
-          "ruleId": "VgoDependencyUpdateAvailable",
-          "kind": "fail",
-          "level": "note",
-          "message": {
-            "text": "Newer version of github.com/klauspost/compress@v1.13.6 is available: v1.16.7",
-            "markdown": "Newer version of github.com/klauspost/compress@v1.13.6 is available: v1.16.7"
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "go.mod",
-                  "uriBaseId": "SRCROOT"
-                },
-                "region": {
-                  "startLine": 38,
-                  "startColumn": 32,
-                  "charOffset": 1473,
-                  "charLength": 7,
-                  "snippet": {
-                    "text": "v1.13.6"
-                  },
-                  "sourceLanguage": "vgo"
-                },
-                "contextRegion": {
-                  "startLine": 36,
-                  "startColumn": 1,
-                  "charOffset": 1346,
-                  "charLength": 252,
-                  "snippet": {
-                    "text": "\tgithub.com/hashicorp/hcl v1.0.0 // indirect\n\tgithub.com/hashicorp/vault/api v1.9.0 // indirect\n\tgithub.com/klauspost/compress v1.13.6 // indirect\n\tgithub.com/mitchellh/go-homedir v1.1.0 // indirect\n\tgithub.com/mitchellh/mapstructure v1.5.0 // indirect"
-                  }
-                }
-              },
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "project",
-                  "kind": "module"
-                }
-              ]
-            }
-          ],
-          "partialFingerprints": {
-            "equalIndicator/v1": "b42213586415fe3cb86f846e552cc7c2aa782044f44ed1b0057e9b168eb48abb"
-          },
-          "properties": {
-            "ideaSeverity": "WEAK WARNING",
-            "qodanaSeverity": "Moderate",
-            "tags": [
-              "vgo"
-            ]
-          }
-        },
-        {
-          "ruleId": "VgoDependencyUpdateAvailable",
-          "kind": "fail",
-          "level": "note",
-          "message": {
-            "text": "Newer version of github.com/golang/snappy@v0.0.1 is available: v0.0.4",
-            "markdown": "Newer version of github.com/golang/snappy@v0.0.1 is available: v0.0.4"
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "go.mod",
-                  "uriBaseId": "SRCROOT"
-                },
-                "region": {
-                  "startLine": 26,
-                  "startColumn": 27,
-                  "charOffset": 827,
-                  "charLength": 6,
-                  "snippet": {
-                    "text": "v0.0.1"
-                  },
-                  "sourceLanguage": "vgo"
-                },
-                "contextRegion": {
-                  "startLine": 24,
-                  "startColumn": 1,
-                  "charOffset": 695,
-                  "charLength": 242,
-                  "snippet": {
-                    "text": "\tgithub.com/golang-jwt/jwt v3.2.2+incompatible // indirect\n\tgithub.com/golang/protobuf v1.5.3 // indirect\n\tgithub.com/golang/snappy v0.0.1 // indirect\n\tgithub.com/google/uuid v1.3.0 // indirect\n\tgithub.com/hashicorp/errwrap v1.1.0 // indirect"
-                  }
-                }
-              },
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "project",
-                  "kind": "module"
-                }
-              ]
-            }
-          ],
-          "partialFingerprints": {
-            "equalIndicator/v1": "fb14eadfd00679e4bd7257a7ce294b8d7816585e9971c4e55e6d342758fddc27"
-          },
-          "properties": {
-            "ideaSeverity": "WEAK WARNING",
-            "qodanaSeverity": "Moderate",
+            "ideaSeverity": "WARNING",
+            "qodanaSeverity": "High",
             "tags": [
               "vgo"
             ]
@@ -17569,10 +16651,10 @@
         }
       ],
       "automationDetails": {
-        "id": "project/qodana/2023-08-11",
-        "guid": "77a1e2fb-606e-4b01-9d92-cdefeb1ac31a",
+        "id": "project/qodana/2023-08-13",
+        "guid": "e21f77e2-6d86-4da9-8e45-141a5f2a8ddc",
         "properties": {
-          "jobUrl": "https://github.com/todo-lists-app/api/actions/runs/5831722655"
+          "jobUrl": "https://github.com/todo-lists-app/api/actions/runs/5849353260"
         }
       },
       "newlineSequences": [
