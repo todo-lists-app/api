@@ -32,7 +32,7 @@ func (v *Validate) ValidateUser(accessToken, userId string) (bool, error) {
 	}
 	defer func() {
 		if err := conn.Close(); err != nil {
-			logs.Infof("error closing connection: %v", err)
+			_ = logs.Errorf("error closing connection: %v", err)
 		}
 	}()
 
@@ -42,7 +42,7 @@ func (v *Validate) ValidateUser(accessToken, userId string) (bool, error) {
 		AccessToken: accessToken,
 	})
 	if err != nil {
-		logs.Infof("error checking id: %v, %s", err, userId)
+		_ = logs.Errorf("error checking id: %v, %s", err, userId)
 		return false, nil
 	}
 	if !resp.GetIsValid() {

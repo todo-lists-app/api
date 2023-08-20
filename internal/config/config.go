@@ -9,10 +9,8 @@ import (
 // Config is the main config
 type Config struct {
 	Local
-	Mongo
 	Vault
 	Services
-	Notifications
 }
 
 // Build is used to build the config, it will call BuildVault and BuildMongo
@@ -20,27 +18,19 @@ func Build() (*Config, error) {
 	cfg := &Config{}
 
 	if err := BuildVault(cfg); err != nil {
-		return nil, logs.Errorf("build vault: %w", err)
-	}
-
-	if err := BuildMongo(cfg); err != nil {
-		return nil, logs.Errorf("build mongo: %w", err)
+		return nil, logs.Errorf("build vault: %v", err)
 	}
 
 	if err := BuildServices(cfg); err != nil {
-		return nil, logs.Errorf("build services: %w", err)
-	}
-
-	if err := BuildNotifications(cfg); err != nil {
-		return nil, logs.Errorf("build notifications: %w", err)
+		return nil, logs.Errorf("build services: %v", err)
 	}
 
 	if err := BuildLocal(cfg); err != nil {
-		return nil, logs.Errorf("build local: %w", err)
+		return nil, logs.Errorf("build local: %v", err)
 	}
 
 	if err := env.Parse(cfg); err != nil {
-		return nil, logs.Errorf("parse config: %w", err)
+		return nil, logs.Errorf("parse config: %v", err)
 	}
 
 	return cfg, nil

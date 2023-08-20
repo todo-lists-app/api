@@ -9,11 +9,23 @@ import (
 	"google.golang.org/grpc/credentials/insecure"
 )
 
+type TodoServiceClientCreator interface {
+	NewTodoServiceClient() pb.TodoServiceClient
+}
+
 // List is the list service
 type List struct {
 	config.Config
 	context.Context
 	UserID string
+	Client pb.TodoServiceClient // Add this line
+}
+
+type TodoList interface {
+	GetList() (*StoredList, error)
+	UpdateList(list *StoredList) (*StoredList, error)
+	DeleteList(id string) (*StoredList, error)
+	CreateList(list *StoredList) (*StoredList, error)
 }
 
 // NewListService creates a new list service
@@ -32,18 +44,19 @@ type StoredList struct {
 	IV     string `bson:"iv" json:"iv"`
 }
 
-// GetList gets a list for the user
-func (l *List) GetList() (*StoredList, error) {
+func (l *List) GetClient() (*List, error) {
 	conn, err := grpc.DialContext(l.Context, l.Config.Services.Todo, grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		return nil, logs.Errorf("error dialing grpc: %v", err)
 	}
-	defer func() {
-		if err := conn.Close(); err != nil {
-			logs.Infof("error closing grpc connection: %v", err)
-		}
-	}()
-	g := pb.NewTodoServiceClient(conn)
+
+	l.Client = pb.NewTodoServiceClient(conn)
+	return l, nil
+}
+
+// GetList gets a list for the user
+func (l *List) GetList() (*StoredList, error) {
+	g := l.Client
 	resp, err := g.Get(l.Context, &pb.TodoGetRequest{
 		UserId: l.UserID,
 	})
@@ -95,15 +108,27 @@ func (l *List) UpdateList(list *StoredList) (*StoredList, error) {
 
 // DeleteList deletes a list for the user
 func (l *List) DeleteList(id string) (*StoredList, error) {
-	client, err := config.GetMongoClient(l.Context, l.Config)
+	conn, err := grpc.DialContext(l.Context, l.Config.Services.User, grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
-		return nil, logs.Errorf("error getting mongo client: %v", err)
+		return nil, logs.Errorf("error dialing grpc: %v", err)
 	}
+
 	defer func() {
-		if err := client.Disconnect(l.Context); err != nil {
-			logs.Infof("error disconnecting mongo client: %v", err)
+		if err := conn.Close(); err != nil {
+			_ = logs.Errorf("error closing grpc connection: %v", err)
 		}
 	}()
+
+	g := pb.NewTodoServiceClient(conn)
+	resp, err := g.Delete(l.Context, &pb.TodoDeleteRequest{
+		UserId: l.UserID,
+	})
+	if err != nil {
+		return nil, logs.Errorf("error deleting list: %v", err)
+	}
+	if resp.GetStatus() != "" {
+		return nil, logs.Errorf("error deleting list status: %v", resp.GetStatus())
+	}
 
 	return &StoredList{
 		UserID: id,
@@ -118,7 +143,7 @@ func (l *List) CreateList(list *StoredList) (*StoredList, error) {
 	}
 	defer func() {
 		if err := conn.Close(); err != nil {
-			logs.Infof("error closing grpc connection: %v", err)
+			_ = logs.Errorf("error closing grpc connection: %v", err)
 		}
 	}()
 	g := pb.NewTodoServiceClient(conn)
