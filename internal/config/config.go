@@ -18,19 +18,19 @@ func Build() (*Config, error) {
 	cfg := &Config{}
 
 	if err := BuildVault(cfg); err != nil {
-		return nil, logs.Errorf("build vault: %w", err)
+		return nil, logs.Errorf("build vault: %v", err)
 	}
 
 	if err := BuildServices(cfg); err != nil {
-		return nil, logs.Errorf("build services: %w", err)
+		return nil, logs.Errorf("build services: %v", err)
 	}
 
 	if err := BuildLocal(cfg); err != nil {
-		return nil, logs.Errorf("build local: %w", err)
+		return nil, logs.Errorf("build local: %v", err)
 	}
 
 	if err := env.Parse(cfg); err != nil {
-		return nil, logs.Errorf("parse config: %w", err)
+		return nil, logs.Errorf("parse config: %v", err)
 	}
 
 	return cfg, nil

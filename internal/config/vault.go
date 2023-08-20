@@ -21,7 +21,7 @@ func BuildVault(cfg *Config) error {
 	v := &Vault{}
 
 	if err := env.Parse(v); err != nil {
-		return logs.Errorf("vault: %w", err)
+		return logs.Errorf("vault: %v", err)
 	}
 
 	if strings.HasPrefix(v.Host, "http") {
