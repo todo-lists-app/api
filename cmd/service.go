@@ -18,14 +18,13 @@ var (
 	ServiceName = "base-service"
 )
 
-func main() {
+func runApp() error {
 	logs.Local().Info(fmt.Sprintf("Starting %s", ServiceName))
 	logs.Local().Info(fmt.Sprintf("Version: %s, Hash: %s", BuildVersion, BuildHash))
 
 	cfg, err := config.Build()
 	if err != nil {
-		_ = logs.Local().Errorf("config: %v", err)
-		return
+		return logs.Local().Errorf("config: %v", err)
 	}
 
 	s := &service.Service{
@@ -33,7 +32,14 @@ func main() {
 	}
 
 	if err := s.Start(); err != nil {
-		_ = logs.Local().Errorf("start service: %v", err)
-		return
+		return logs.Local().Errorf("start service: %v", err)
+	}
+
+	return nil
+}
+
+func main() {
+	if err := runApp(); err != nil {
+		_ = logs.Local().Errorf("run app: %v", err)
 	}
 }

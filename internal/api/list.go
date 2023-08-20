@@ -56,8 +56,7 @@ func (l *List) GetClient() (*List, error) {
 
 // GetList gets a list for the user
 func (l *List) GetList() (*StoredList, error) {
-	g := l.Client
-	resp, err := g.Get(l.Context, &pb.TodoGetRequest{
+	resp, err := l.Client.Get(l.Context, &pb.TodoGetRequest{
 		UserId: l.UserID,
 	})
 	if err != nil {
@@ -76,18 +75,7 @@ func (l *List) GetList() (*StoredList, error) {
 
 // UpdateList updates a list for the user
 func (l *List) UpdateList(list *StoredList) (*StoredList, error) {
-	conn, err := grpc.DialContext(l.Context, l.Config.Services.Todo, grpc.WithTransportCredentials(insecure.NewCredentials()))
-	if err != nil {
-		return nil, logs.Errorf("error dialing grpc: %v", err)
-	}
-	defer func() {
-		if err := conn.Close(); err != nil {
-			logs.Infof("error closing grpc connection: %v", err)
-		}
-	}()
-	g := pb.NewTodoServiceClient(conn)
-
-	resp, err := g.Update(l.Context, &pb.TodoInjectRequest{
+	resp, err := l.Client.Update(l.Context, &pb.TodoInjectRequest{
 		UserId: l.UserID,
 		Data:   list.Data,
 		Iv:     list.IV,
@@ -108,19 +96,7 @@ func (l *List) UpdateList(list *StoredList) (*StoredList, error) {
 
 // DeleteList deletes a list for the user
 func (l *List) DeleteList(id string) (*StoredList, error) {
-	conn, err := grpc.DialContext(l.Context, l.Config.Services.User, grpc.WithTransportCredentials(insecure.NewCredentials()))
-	if err != nil {
-		return nil, logs.Errorf("error dialing grpc: %v", err)
-	}
-
-	defer func() {
-		if err := conn.Close(); err != nil {
-			_ = logs.Errorf("error closing grpc connection: %v", err)
-		}
-	}()
-
-	g := pb.NewTodoServiceClient(conn)
-	resp, err := g.Delete(l.Context, &pb.TodoDeleteRequest{
+	resp, err := l.Client.Delete(l.Context, &pb.TodoDeleteRequest{
 		UserId: l.UserID,
 	})
 	if err != nil {
@@ -137,17 +113,7 @@ func (l *List) DeleteList(id string) (*StoredList, error) {
 
 // CreateList creates a new list for the user
 func (l *List) CreateList(list *StoredList) (*StoredList, error) {
-	conn, err := grpc.DialContext(l.Context, l.Config.Services.Todo, grpc.WithTransportCredentials(insecure.NewCredentials()))
-	if err != nil {
-		return nil, logs.Errorf("error dialing grpc: %v", err)
-	}
-	defer func() {
-		if err := conn.Close(); err != nil {
-			_ = logs.Errorf("error closing grpc connection: %v", err)
-		}
-	}()
-	g := pb.NewTodoServiceClient(conn)
-	resp, err := g.Insert(l.Context, &pb.TodoInjectRequest{
+	resp, err := l.Client.Insert(l.Context, &pb.TodoInjectRequest{
 		UserId: l.UserID,
 		Data:   list.Data,
 		Iv:     list.IV,
