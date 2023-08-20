@@ -23,11 +23,11 @@ func TestBuild(t *testing.T) {
 
 	t.Run("custom values", func(t *testing.T) {
 		os.Clearenv()
-		os.Setenv("BUGFIXES_LOCAL_ONLY", "true")
-		os.Setenv("DEVELOPMENT", "true")
-		os.Setenv("HTTP_PORT", "8080")
-		os.Setenv("VAULT_HOST", "https://vault.example.com")
-		os.Setenv("TODO_SERVICE", "todo-service.example.com")
+		_ = os.Setenv("BUGFIXES_LOCAL_ONLY", "true")
+		_ = os.Setenv("DEVELOPMENT", "true")
+		_ = os.Setenv("HTTP_PORT", "8080")
+		_ = os.Setenv("VAULT_HOST", "https://vault.example.com")
+		_ = os.Setenv("TODO_SERVICE", "todo-service.example.com")
 
 		cfg, err := Build()
 

@@ -22,9 +22,9 @@ func TestBuildServices(t *testing.T) {
 
 	t.Run("custom values", func(t *testing.T) {
 		os.Clearenv()
-		os.Setenv("IDENTITY_SERVICE", "custom-id-service:4000")
-		os.Setenv("TODO_SERVICE", "custom-todo-service:4000")
-		os.Setenv("USER_SERVICE", "custom-user-service:4000")
+		_ = os.Setenv("IDENTITY_SERVICE", "custom-id-service:4000")
+		_ = os.Setenv("TODO_SERVICE", "custom-todo-service:4000")
+		_ = os.Setenv("USER_SERVICE", "custom-user-service:4000")
 
 		cfg := &Config{}
 		err := BuildServices(cfg)

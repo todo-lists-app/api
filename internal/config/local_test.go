@@ -22,9 +22,9 @@ func TestBuildLocal(t *testing.T) {
 
 	t.Run("custom values", func(t *testing.T) {
 		os.Clearenv()
-		os.Setenv("BUGFIXES_LOCAL_ONLY", "true")
-		os.Setenv("DEVELOPMENT", "true")
-		os.Setenv("HTTP_PORT", "8080")
+		_ = os.Setenv("BUGFIXES_LOCAL_ONLY", "true")
+		_ = os.Setenv("DEVELOPMENT", "true")
+		_ = os.Setenv("HTTP_PORT", "8080")
 
 		cfg := &Config{}
 		err := BuildLocal(cfg)

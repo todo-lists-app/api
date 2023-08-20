@@ -23,7 +23,7 @@ func TestBuildVault(t *testing.T) {
 
 	t.Run("with port", func(t *testing.T) {
 		os.Clearenv()
-		os.Setenv("VAULT_PORT", "8080")
+		_ = os.Setenv("VAULT_PORT", "8080")
 
 		cfg := &Config{}
 		err := BuildVault(cfg)
@@ -34,7 +34,7 @@ func TestBuildVault(t *testing.T) {
 
 	t.Run("with http prefix", func(t *testing.T) {
 		os.Clearenv()
-		os.Setenv("VAULT_HOST", "http://localhost")
+		_ = os.Setenv("VAULT_HOST", "http://localhost")
 
 		cfg := &Config{}
 		err := BuildVault(cfg)
