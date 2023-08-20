@@ -1,8 +1,0 @@
-with-expecter: true
-keeptree: true
-outpkg: mocks
-packages:
-  github.com/todo-lists-app/todo-lists-api/internal/api:
-    config:
-    interfaces:
-      - TodoList
