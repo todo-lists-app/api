@@ -4,10 +4,11 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/todo-lists-app/todo-lists-api/internal/validate"
-	"go.mongodb.org/mongo-driver/mongo"
 	"net/http"
 	"time"
+
+	"github.com/todo-lists-app/todo-lists-api/internal/validate"
+	"go.mongodb.org/mongo-driver/mongo"
 
 	"github.com/bugfixes/go-bugfixes/logs"
 	"github.com/go-chi/chi/v5"
@@ -233,7 +234,14 @@ func startHTTP(cfg *config.Config, errChan chan error) {
 				return
 			}
 
-			l := api.NewListService(r.Context(), *cfg, subject)
+			l, err := api.NewListService(r.Context(), *cfg, subject).GetClient()
+			if err != nil {
+				logs.Infof("Error: %s", err)
+				w.WriteHeader(http.StatusInternalServerError)
+				errChan <- err
+				return
+			}
+
 			stored, err := l.CreateList(&api.StoredList{
 				UserID: subject,
 				Data:   id.Data,
@@ -287,7 +295,16 @@ func startHTTP(cfg *config.Config, errChan chan error) {
 				errChan <- err
 				return
 			}
-			if _, err := api.NewListService(r.Context(), *cfg, subject).UpdateList(&api.StoredList{
+
+			l, err := api.NewListService(r.Context(), *cfg, subject).GetClient()
+			if err != nil {
+				logs.Infof("Error: %s", err)
+				w.WriteHeader(http.StatusInternalServerError)
+				errChan <- err
+				return
+			}
+
+			if _, err := l.UpdateList(&api.StoredList{
 				UserID: subject,
 				Data:   id.Data,
 				IV:     id.IV,
