@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/SherClockHolmes/webpush-go"
 	"github.com/todo-lists-app/todo-lists-api/internal/validate"
 	"go.mongodb.org/mongo-driver/mongo"
 	"net/http"
@@ -30,7 +29,6 @@ func (s *Service) Start() error {
 	errChan := make(chan error)
 
 	go startHTTP(s.Config, errChan)
-	// go getNotifications(s.Config, errChan)
 
 	return <-errChan
 }
@@ -39,22 +37,6 @@ type injectData struct {
 	Data string `json:"data"`
 	IV   string `json:"iv"`
 }
-
-//func getNotifications(cfg *config.Config, errChan chan error) {
-//
-//}
-
-//const cbSettings = gobreaker.Settings{
-//	Name:        "HTTP Breaker",
-//	Timeout:     time.Second * 60,
-//	MaxRequests: 10,
-//	Interval:    time.Minute * 1,
-//	ReadyToTrip: func(counts gobreaker.Counts) bool {
-//		failureRatio := float64(counts.TotalFailures) / float64(counts.Requests)
-//		return counts.Requests >= 10 && failureRatio >= 0.6
-//	},
-//}
-//cb := gobreaker.NewCircuitBreaker(cbSettings)
 
 //golint:ignore(gocyclo)
 func startHTTP(cfg *config.Config, errChan chan error) {
@@ -148,88 +130,6 @@ func startHTTP(cfg *config.Config, errChan chan error) {
 		})
 	})
 
-	r.Route("/notifications", func(r chi.Router) {
-		r.Get("/", func(w http.ResponseWriter, r *http.Request) {
-			subject := r.Header.Get("X-User-Subject")
-			if subject == "" {
-				logs.Info("No Subject")
-				w.WriteHeader(http.StatusUnauthorized)
-				return
-			}
-
-			type resp struct {
-				ID       string `json:"id"`
-				Title    string `json:"title"`
-				Message  string `json:"message"`
-				Read     bool   `json:"read"`
-				Priority string `json:"priority"`
-			}
-			respJ := []resp{
-				{
-					ID:       "jyuuuooprf8",
-					Title:    "test",
-					Message:  "test message",
-					Read:     false,
-					Priority: "low",
-				},
-			}
-
-			w.Header().Set("Content-Type", "application/json")
-			if err := json.NewEncoder(w).Encode(respJ); err != nil {
-				logs.Infof("Encode Error: %s", err)
-			}
-		})
-
-		r.Get("/test", func(w http.ResponseWriter, r *http.Request) {
-			n := api.NewNotificationService(r.Context(), *cfg, "test")
-			if err := n.SendTestNotification(); err != nil {
-				w.WriteHeader(http.StatusInternalServerError)
-				logs.Infof("Error: %s", err)
-			}
-			w.WriteHeader(http.StatusOK)
-		})
-		r.Post("/subscribe", func(w http.ResponseWriter, r *http.Request) {
-			subject := r.Header.Get("X-User-Subject")
-			if subject == "" {
-				logs.Info("No Subject")
-				w.WriteHeader(http.StatusUnauthorized)
-				return
-			}
-			accessToken := r.Header.Get("X-User-Access-Token")
-			if accessToken == "" {
-				logs.Info("No Access Token")
-				w.WriteHeader(http.StatusUnauthorized)
-				return
-			}
-
-			v := validate.NewValidate(cfg, r.Context())
-			valid, err := v.ValidateUser(accessToken, subject)
-			if err != nil {
-				logs.Infof("validate user err: %s", err)
-				w.WriteHeader(http.StatusInternalServerError)
-				return
-			}
-			if !valid {
-				logs.Info("invalid user")
-				w.WriteHeader(http.StatusUnauthorized)
-				return
-			}
-
-			var sub webpush.Subscription
-			if err := json.NewDecoder(r.Body).Decode(&sub); err != nil {
-				logs.Infof("Error: %s", err)
-			}
-
-			n := api.NewNotificationService(r.Context(), *cfg, subject)
-			if err := n.StoreUser(sub); err != nil {
-				logs.Infof("Error: %s", err)
-				w.WriteHeader(http.StatusInternalServerError)
-				return
-			}
-			logs.Infof("Subscription: %v", sub)
-		})
-	})
-
 	r.Route("/list", func(r chi.Router) {
 		r.Get("/", func(w http.ResponseWriter, r *http.Request) {
 			subject := r.Header.Get("X-User-Subject")
@@ -263,7 +163,6 @@ func startHTTP(cfg *config.Config, errChan chan error) {
 			list, err := l.GetList()
 			if err != nil {
 				if errors.Is(err, mongo.ErrNoDocuments) {
-					// logs.Infof("Error: %s", err)
 					w.WriteHeader(http.StatusOK)
 					return
 				}

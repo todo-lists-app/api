@@ -8,6 +8,7 @@ import (
 type Services struct {
 	Identity string `env:"IDENTITY_SERVICE" envDefault:"id-checker.todo-list:3000"`
 	Todo     string `env:"TODO_SERVICE" envDefault:"todo-service.todo-list:3000"`
+	User     string `env:"USER_SERVICE" envDefault:"user-service.todo-list:3000"`
 }
 
 func BuildServices(cfg *Config) error {

@@ -107,6 +107,7 @@ github.com/ryanuber/go-glob v1.0.0 h1:iQh3xXAumdQ+4Ufa5b25cRpC5TYKlno6hsv6Cb3pkB
 github.com/ryanuber/go-glob v1.0.0/go.mod h1:807d1WSdnB0XRJzKNil9Om6lcp/3a0v4qIHxIXzX/Yc=
 github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=
 github.com/stretchr/objx v0.4.0/go.mod h1:YvHI0jy2hoMjB+UWwv71VJQ9isScKT/TqJzVSSt89Yw=
+github.com/stretchr/objx v0.5.0 h1:1zr/of2m5FGMsad5YfcqgdqdWrIhu+EBEJRhR1U7z/c=
 github.com/stretchr/objx v0.5.0/go.mod h1:Yh+to48EsGEfYuaHDzXPcE3xhTkx73EhmCGUpEOglKo=
 github.com/stretchr/testify v1.2.2/go.mod h1:a8OnRcib4nhh0OaRAV+Yts87kKdq0PP7pXfy6kDkUVs=
 github.com/stretchr/testify v1.6.1/go.mod h1:6Fq8oRcR53rry900zMqJjRRixrwX3KX962/h/Wwjteg=
@@ -117,12 +118,20 @@ github.com/stretchr/testify v1.8.0/go.mod h1:yNjHg4UonilssWZ8iaSj1OCr/vHnekPRkoO
 github.com/stretchr/testify v1.8.2/go.mod h1:w2LPCIKwWwSfY2zedu0+kehJoqGctiVI29o6fzry7u4=
 github.com/stretchr/testify v1.8.3 h1:RP3t2pwF7cMEbC1dqtB6poj3niw/9gnV4Cjg5oW5gtY=
 github.com/stretchr/testify v1.8.3/go.mod h1:sz/lmYIOXD/1dqDmKjjqLyZ2RngseejIcXlSw2iwfAo=
+github.com/stretchr/testify v1.8.4 h1:CcVxjf3Q8PM0mHUKJCdn+eZZtm5yQwehR5yeSVQQcUk=
+github.com/stretchr/testify v1.8.4/go.mod h1:sz/lmYIOXD/1dqDmKjjqLyZ2RngseejIcXlSw2iwfAo=
 github.com/todo-lists-app/protobufs v0.0.0-20230710081248-476dd05ee743 h1:Iv2p71q+I7PR9Vs9fya2WzRe1i4aP7H7GgR12oHohSc=
 github.com/todo-lists-app/protobufs v0.0.0-20230710081248-476dd05ee743/go.mod h1:++aQjX2RgYmrKu32JKXipEG1H2vu/bqMTCdR03ZPrPM=
 github.com/todo-lists-app/protobufs v0.0.0-20230728215834-aaf52566b992 h1:uw5dEjgAFGw5TcuqtVT+ngZOxRXDoIRxFfpbcU1jUe4=
 github.com/todo-lists-app/protobufs v0.0.0-20230728215834-aaf52566b992/go.mod h1:++aQjX2RgYmrKu32JKXipEG1H2vu/bqMTCdR03ZPrPM=
 github.com/todo-lists-app/protobufs v0.0.0-20230813210309-8801c8db57fd h1:qJSbzKN7EGCdLgfdM57c2Sp/6sIrQhGZrxuJN/HvCYs=
 github.com/todo-lists-app/protobufs v0.0.0-20230813210309-8801c8db57fd/go.mod h1:++aQjX2RgYmrKu32JKXipEG1H2vu/bqMTCdR03ZPrPM=
+github.com/todo-lists-app/protobufs v0.0.0-20230820132229-18f288d3ae6a h1:Wj1bR1HH19is/Rm/MWnl2Xtm9BkFNTobQYNL5VxIXVo=
+github.com/todo-lists-app/protobufs v0.0.0-20230820132229-18f288d3ae6a/go.mod h1:++aQjX2RgYmrKu32JKXipEG1H2vu/bqMTCdR03ZPrPM=
+github.com/todo-lists-app/protobufs v0.0.0-20230820164821-e27d4899cf99 h1:1R8J6oqm4vXz2c/9GZKfZpn82pSBIlHmILssNrooTjw=
+github.com/todo-lists-app/protobufs v0.0.0-20230820164821-e27d4899cf99/go.mod h1:++aQjX2RgYmrKu32JKXipEG1H2vu/bqMTCdR03ZPrPM=
+github.com/todo-lists-app/protobufs v0.0.0-20230820170046-edaf153df60a h1:o7aq4WRIlgJuQXNBFK+2nKvoV6vLlZYMS3l6JxlVDQk=
+github.com/todo-lists-app/protobufs v0.0.0-20230820170046-edaf153df60a/go.mod h1:++aQjX2RgYmrKu32JKXipEG1H2vu/bqMTCdR03ZPrPM=
 github.com/xdg-go/pbkdf2 v1.0.0 h1:Su7DPu48wXMwC3bs7MCNG+z4FhcyEuz5dlvchbq0B0c=
 github.com/xdg-go/pbkdf2 v1.0.0/go.mod h1:jrpuAogTd400dnrH08LKmI/xc1MbPOebTwRqcT5RDeI=
 github.com/xdg-go/scram v1.1.2 h1:FHX5I5B4i4hKRVRBCFRxq1iQRej7WO3hhBuJf+UUySY=
@@ -206,6 +215,8 @@ google.golang.org/genproto/googleapis/rpc v0.0.0-20230807174057-1744710a1577 h1:
 google.golang.org/genproto/googleapis/rpc v0.0.0-20230807174057-1744710a1577/go.mod h1:+Bk1OCOj40wS2hwAMA+aCW9ypzm63QTBBHp6lQ3p+9M=
 google.golang.org/genproto/googleapis/rpc v0.0.0-20230814215434-ca7cfce7776a h1:5rTPHLf5eLPfqGvw3fLpEmUpko2Ky91ft14LxGs5BZc=
 google.golang.org/genproto/googleapis/rpc v0.0.0-20230814215434-ca7cfce7776a/go.mod h1:+Bk1OCOj40wS2hwAMA+aCW9ypzm63QTBBHp6lQ3p+9M=
+google.golang.org/genproto/googleapis/rpc v0.0.0-20230815205213-6bfd019c3878 h1:lv6/DhyiFFGsmzxbsUUTOkN29II+zeWHxvT8Lpdxsv0=
+google.golang.org/genproto/googleapis/rpc v0.0.0-20230815205213-6bfd019c3878/go.mod h1:+Bk1OCOj40wS2hwAMA+aCW9ypzm63QTBBHp6lQ3p+9M=
 google.golang.org/grpc v1.57.0 h1:kfzNeI/klCGD2YPMUlaGNT3pxvYfga7smW3Vth8Zsiw=
 google.golang.org/grpc v1.57.0/go.mod h1:Sd+9RMTACXwmub0zcNY2c4arhtrbBYD1AUHI/dt16Mo=
 google.golang.org/protobuf v1.26.0-rc.1/go.mod h1:jlhhOSvTdKEhbULTjvd4ARK9grFBp09yW+WbY/TyQbw=
