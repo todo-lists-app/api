@@ -13,7 +13,7 @@ type Vault struct {
 	Host    string `env:"VAULT_HOST" envDefault:"localhost"`
 	Port    string `env:"VAULT_PORT" envDefault:""`
 	Token   string `env:"VAULT_TOKEN" envDefault:"root"`
-	Address string `env:"VAULT_ADDRESS" envDefault:""`
+	Address string
 }
 
 // BuildVault builds the vault config
@@ -30,6 +30,10 @@ func BuildVault(cfg *Config) error {
 
 	if v.Port != "" {
 		v.Address = fmt.Sprintf("%s:%s", v.Host, v.Port)
+	}
+
+	if v.Address == "" {
+		v.Address = fmt.Sprintf("https://%s", v.Host)
 	}
 
 	cfg.Vault = *v
