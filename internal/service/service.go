@@ -159,7 +159,14 @@ func startHTTP(cfg *config.Config, errChan chan error) {
 				return
 			}
 
-			l := api.NewListService(r.Context(), *cfg, subject)
+			l, err := api.NewListService(r.Context(), *cfg, subject).GetClient()
+			if err != nil {
+				logs.Infof("Error: %s", err)
+				w.WriteHeader(http.StatusInternalServerError)
+				errChan <- err
+				return
+			}
+
 			list, err := l.GetList()
 			if err != nil {
 				if errors.Is(err, mongo.ErrNoDocuments) {
