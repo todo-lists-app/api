@@ -4,10 +4,11 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/todo-lists-app/todo-lists-api/internal/validate"
-	"go.mongodb.org/mongo-driver/mongo"
 	"net/http"
 	"time"
+
+	"github.com/todo-lists-app/todo-lists-api/internal/validate"
+	"go.mongodb.org/mongo-driver/mongo"
 
 	"github.com/bugfixes/go-bugfixes/logs"
 	"github.com/go-chi/chi/v5"

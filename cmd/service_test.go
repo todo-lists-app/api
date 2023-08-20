@@ -2,8 +2,9 @@ package main
 
 import (
 	"errors"
-	"github.com/todo-lists-app/todo-lists-api/internal/config"
 	"testing"
+
+	"github.com/todo-lists-app/todo-lists-api/internal/config"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"

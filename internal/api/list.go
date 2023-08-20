@@ -2,6 +2,7 @@ package api
 
 import (
 	"context"
+
 	"github.com/bugfixes/go-bugfixes/logs"
 	pb "github.com/todo-lists-app/protobufs/generated/todo/v1"
 	"github.com/todo-lists-app/todo-lists-api/internal/config"

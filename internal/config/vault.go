@@ -2,8 +2,9 @@ package config
 
 import (
 	"fmt"
-	"github.com/bugfixes/go-bugfixes/logs"
 	"strings"
+
+	"github.com/bugfixes/go-bugfixes/logs"
 
 	"github.com/caarlos0/env/v8"
 )
