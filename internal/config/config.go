@@ -16,7 +16,7 @@ type Config struct {
 func Build() (*Config, error) {
 	cfg := &Config{}
 
-	gcc, err := gc.Build(gc.BuildVault, gc.BuildLocal)
+	gcc, err := gc.Build(gc.Vault, gc.Local)
 	if err != nil {
 		return nil, logs.Errorf("build config: %v", err)
 	}
