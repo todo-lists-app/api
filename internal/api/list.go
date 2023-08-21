@@ -19,7 +19,7 @@ type List struct {
 	config.Config
 	context.Context
 	UserID string
-	Client pb.TodoServiceClient // Add this line
+	Client pb.TodoServiceClient
 }
 
 type TodoList interface {

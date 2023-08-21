@@ -147,7 +147,12 @@ func startHTTP(cfg *config.Config, errChan chan error) {
 				return
 			}
 
-			v := validate.NewValidate(cfg, r.Context())
+			v, err := validate.NewValidate(cfg, r.Context()).GetClient()
+			if err != nil {
+				logs.Infof("validate user err: %s", err)
+				w.WriteHeader(http.StatusInternalServerError)
+				return
+			}
 			valid, err := v.ValidateUser(accessToken, subject)
 			if err != nil {
 				logs.Infof("validate user err: %s", err)
@@ -213,7 +218,12 @@ func startHTTP(cfg *config.Config, errChan chan error) {
 				return
 			}
 
-			v := validate.NewValidate(cfg, r.Context())
+			v, err := validate.NewValidate(cfg, r.Context()).GetClient()
+			if err != nil {
+				logs.Infof("validate user err: %s", err)
+				w.WriteHeader(http.StatusInternalServerError)
+				return
+			}
 			valid, err := v.ValidateUser(accessToken, subject)
 			if err != nil {
 				logs.Infof("validate user err: %s", err)
@@ -275,7 +285,12 @@ func startHTTP(cfg *config.Config, errChan chan error) {
 				return
 			}
 
-			v := validate.NewValidate(cfg, r.Context())
+			v, err := validate.NewValidate(cfg, r.Context()).GetClient()
+			if err != nil {
+				logs.Infof("validate user err: %s", err)
+				w.WriteHeader(http.StatusInternalServerError)
+				return
+			}
 			valid, err := v.ValidateUser(accessToken, subject)
 			if err != nil {
 				logs.Infof("validate user err: %s", err)
@@ -332,7 +347,12 @@ func startHTTP(cfg *config.Config, errChan chan error) {
 				return
 			}
 
-			v := validate.NewValidate(cfg, r.Context())
+			v, err := validate.NewValidate(cfg, r.Context()).GetClient()
+			if err != nil {
+				logs.Infof("validate user err: %s", err)
+				w.WriteHeader(http.StatusInternalServerError)
+				return
+			}
 			valid, err := v.ValidateUser(accessToken, subject)
 			if err != nil {
 				logs.Infof("validate user err: %s", err)
