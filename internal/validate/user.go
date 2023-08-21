@@ -10,9 +10,18 @@ import (
 	"google.golang.org/grpc/credentials/insecure"
 )
 
+type IdCheckerServiceClientCreator interface {
+	NewIdCheckerServiceClient() pb.IdCheckerServiceClient
+}
+
 type Validate struct {
 	Config *config.Config
 	CTX    context.Context
+	Client pb.IdCheckerServiceClient
+}
+
+type Checker interface {
+	ValidateUser(accessToken, userId string) (bool, error)
 }
 
 func NewValidate(config *config.Config, ctx context.Context) *Validate {
@@ -22,23 +31,22 @@ func NewValidate(config *config.Config, ctx context.Context) *Validate {
 	}
 }
 
+func (v *Validate) GetClient() (*Validate, error) {
+	conn, err := grpc.DialContext(v.CTX, v.Config.Services.Identity, grpc.WithTransportCredentials(insecure.NewCredentials()))
+	if err != nil {
+		return nil, logs.Errorf("error dialing grpc: %v", err)
+	}
+
+	v.Client = pb.NewIdCheckerServiceClient(conn)
+	return v, nil
+}
+
 func (v *Validate) ValidateUser(accessToken, userId string) (bool, error) {
-	if v.Config.Development {
+	if v.Config != nil && v.Config.Config.Local.Development {
 		return true, nil
 	}
 
-	conn, err := grpc.DialContext(v.CTX, v.Config.Services.Identity, grpc.WithTransportCredentials(insecure.NewCredentials()))
-	if err != nil {
-		return false, err
-	}
-	defer func() {
-		if err := conn.Close(); err != nil {
-			_ = logs.Errorf("error closing connection: %v", err)
-		}
-	}()
-
-	g := pb.NewIdCheckerServiceClient(conn)
-	resp, err := g.CheckId(v.CTX, &pb.CheckIdRequest{
+	resp, err := v.Client.CheckId(v.CTX, &pb.CheckIdRequest{
 		Id:          userId,
 		AccessToken: accessToken,
 	})
