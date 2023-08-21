@@ -2,8 +2,6 @@ module github.com/todo-lists-app/todo-lists-api
 
 go 1.21
 
-toolchain go1.21.0
-
 require (
 	github.com/bugfixes/go-bugfixes v0.9.7
 	github.com/caarlos0/env/v8 v8.0.0
