@@ -7,10 +7,11 @@ require (
 	github.com/caarlos0/env/v8 v8.0.0
 	github.com/go-chi/chi/v5 v5.0.10
 	github.com/go-chi/cors v1.2.1
-	github.com/keloran/go-config v0.2.1
+	github.com/keloran/go-config v0.2.2
 	github.com/keloran/go-healthcheck v1.2.1
 	github.com/keloran/go-probe v1.0.0
 	github.com/stretchr/testify v1.8.4
+	github.com/todo-lists-app/go-validate-user v0.1.0
 	github.com/todo-lists-app/protobufs v0.1.0
 	go.mongodb.org/mongo-driver v1.12.1
 	google.golang.org/grpc v1.57.0
@@ -43,7 +44,6 @@ require (
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/ryanuber/go-glob v1.0.0 // indirect
 	github.com/stretchr/objx v0.5.0 // indirect
-	github.com/todo-lists-app/go-validate-user v0.1.0 // indirect
 	github.com/xdg-go/pbkdf2 v1.0.0 // indirect
 	github.com/xdg-go/scram v1.1.2 // indirect
 	github.com/xdg-go/stringprep v1.0.4 // indirect
