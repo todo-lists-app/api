@@ -115,8 +115,12 @@ github.com/stretchr/testify v1.8.4 h1:CcVxjf3Q8PM0mHUKJCdn+eZZtm5yQwehR5yeSVQQcU
 github.com/stretchr/testify v1.8.4/go.mod h1:sz/lmYIOXD/1dqDmKjjqLyZ2RngseejIcXlSw2iwfAo=
 github.com/todo-lists-app/go-validate-user v0.0.1 h1:PexiH6ipk+7EySW4wEEYEU1DEqGl+HRFDlEb4LU+yi0=
 github.com/todo-lists-app/go-validate-user v0.0.1/go.mod h1:ylbko6gdl4oerTdyqi0OOOtge5yBrerA86TVBmbK+k4=
+github.com/todo-lists-app/go-validate-user v0.1.0 h1:dkM5BCbaV0I4098HdyBRWFzJaaHOLjx7a/q94qtx3Bc=
+github.com/todo-lists-app/go-validate-user v0.1.0/go.mod h1:mFUK+9W9sjOIVVtnX8Z+/vyJaBiff/Zz1NSv+P9EMV8=
 github.com/todo-lists-app/protobufs v0.0.0-20230820170046-edaf153df60a h1:o7aq4WRIlgJuQXNBFK+2nKvoV6vLlZYMS3l6JxlVDQk=
 github.com/todo-lists-app/protobufs v0.0.0-20230820170046-edaf153df60a/go.mod h1:++aQjX2RgYmrKu32JKXipEG1H2vu/bqMTCdR03ZPrPM=
+github.com/todo-lists-app/protobufs v0.1.0 h1:3evwmI+UwEcqxmAcP4tj8U69ByakUiOLYRxeaW8Tz3A=
+github.com/todo-lists-app/protobufs v0.1.0/go.mod h1:++aQjX2RgYmrKu32JKXipEG1H2vu/bqMTCdR03ZPrPM=
 github.com/xdg-go/pbkdf2 v1.0.0 h1:Su7DPu48wXMwC3bs7MCNG+z4FhcyEuz5dlvchbq0B0c=
 github.com/xdg-go/pbkdf2 v1.0.0/go.mod h1:jrpuAogTd400dnrH08LKmI/xc1MbPOebTwRqcT5RDeI=
 github.com/xdg-go/scram v1.1.2 h1:FHX5I5B4i4hKRVRBCFRxq1iQRej7WO3hhBuJf+UUySY=
