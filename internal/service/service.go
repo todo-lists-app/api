@@ -7,7 +7,6 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/todo-lists-app/todo-lists-api/internal/validate"
 	"go.mongodb.org/mongo-driver/mongo"
 
 	"github.com/bugfixes/go-bugfixes/logs"
@@ -16,6 +15,7 @@ import (
 	"github.com/go-chi/cors"
 	"github.com/keloran/go-healthcheck"
 	"github.com/keloran/go-probe"
+	validate "github.com/todo-lists-app/go-validate-user"
 	"github.com/todo-lists-app/todo-lists-api/internal/api"
 	"github.com/todo-lists-app/todo-lists-api/internal/config"
 )
@@ -147,7 +147,7 @@ func startHTTP(cfg *config.Config, errChan chan error) {
 				return
 			}
 
-			v, err := validate.NewValidate(cfg, r.Context()).GetClient()
+			v, err := validate.NewValidate(r.Context(), cfg.Services.Identity, cfg.Local.Development).GetClient()
 			if err != nil {
 				logs.Infof("validate user err: %s", err)
 				w.WriteHeader(http.StatusInternalServerError)
@@ -218,7 +218,7 @@ func startHTTP(cfg *config.Config, errChan chan error) {
 				return
 			}
 
-			v, err := validate.NewValidate(cfg, r.Context()).GetClient()
+			v, err := validate.NewValidate(r.Context(), cfg.Services.Identity, cfg.Local.Development).GetClient()
 			if err != nil {
 				logs.Infof("validate user err: %s", err)
 				w.WriteHeader(http.StatusInternalServerError)
@@ -285,7 +285,7 @@ func startHTTP(cfg *config.Config, errChan chan error) {
 				return
 			}
 
-			v, err := validate.NewValidate(cfg, r.Context()).GetClient()
+			v, err := validate.NewValidate(r.Context(), cfg.Services.Identity, cfg.Local.Development).GetClient()
 			if err != nil {
 				logs.Infof("validate user err: %s", err)
 				w.WriteHeader(http.StatusInternalServerError)
@@ -347,7 +347,7 @@ func startHTTP(cfg *config.Config, errChan chan error) {
 				return
 			}
 
-			v, err := validate.NewValidate(cfg, r.Context()).GetClient()
+			v, err := validate.NewValidate(r.Context(), cfg.Services.Identity, cfg.Local.Development).GetClient()
 			if err != nil {
 				logs.Infof("validate user err: %s", err)
 				w.WriteHeader(http.StatusInternalServerError)
