@@ -40,15 +40,15 @@ func ListExists(w http.ResponseWriter, l *api.StoredList) error {
 }
 
 // AccountData returns the account details for the user.
-func AccountData(w http.ResponseWriter, a *api.AccountDetails) error {
-	type Account struct {
-		Message string             `json:"message,omitempty"`
-		Data    api.AccountDetails `json:"data,omitempty"`
-	}
-
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
-	return json.NewEncoder(w).Encode(Account{
-		Data: *a,
-	})
-}
+//func AccountData(w http.ResponseWriter, a *api.AccountDetails) error {
+//	type Account struct {
+//		Message string             `json:"message,omitempty"`
+//		Data    api.AccountDetails `json:"data,omitempty"`
+//	}
+//
+//	w.Header().Set("Content-Type", "application/json")
+//	w.WriteHeader(http.StatusOK)
+//	return json.NewEncoder(w).Encode(Account{
+//		Data: *a,
+//	})
+//}

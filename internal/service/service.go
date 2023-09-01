@@ -75,49 +75,56 @@ func startHTTP(cfg *config.Config, errChan chan error) {
 	r.Get("/probe", probe.HTTP)
 
 	r.Route("/account", func(r chi.Router) {
-		r.Get("/", func(w http.ResponseWriter, r *http.Request) {
-			subject := r.Header.Get("X-User-Subject")
-
-			if subject == "" {
-				logs.Info("No Subject")
-				w.WriteHeader(http.StatusUnauthorized)
-				return
-			}
-
-			a := api.NewAccountService(r.Context(), *cfg, subject)
-			account, err := a.GetAccount()
-			if err != nil {
-				logs.Infof("Error: %s", err)
-				w.WriteHeader(http.StatusInternalServerError)
-				errChan <- err
-				return
-			}
-
-			if account == nil {
-				account, err := a.CreateAccount()
-				if err != nil {
-					logs.Infof("Error: %s", err)
-					w.WriteHeader(http.StatusInternalServerError)
-					errChan <- err
-					return
-				}
-
-				if err := AccountData(w, account); err != nil {
-					logs.Infof("Error: %s", err)
-					w.WriteHeader(http.StatusInternalServerError)
-					errChan <- err
-					return
-				}
-			}
-
-			if err := AccountData(w, account); err != nil {
-				logs.Infof("Error: %s", err)
-				w.WriteHeader(http.StatusInternalServerError)
-				errChan <- err
-				return
-			}
-		})
+		//r.Get("/", func(w http.ResponseWriter, r *http.Request) {
+		//	subject := r.Header.Get("X-User-Subject")
+		//
+		//	if subject == "" {
+		//		logs.Info("No Subject")
+		//		w.WriteHeader(http.StatusUnauthorized)
+		//		return
+		//	}
+		//
+		//	a := api.NewAccountService(r.Context(), *cfg, subject)
+		//	account, err := a.GetAccount()
+		//	if err != nil {
+		//		logs.Infof("Error: %s", err)
+		//		w.WriteHeader(http.StatusInternalServerError)
+		//		errChan <- err
+		//		return
+		//	}
+		//
+		//	if account == nil {
+		//		account, err := a.CreateAccount()
+		//		if err != nil {
+		//			logs.Infof("Error: %s", err)
+		//			w.WriteHeader(http.StatusInternalServerError)
+		//			errChan <- err
+		//			return
+		//		}
+		//
+		//		if err := AccountData(w, account); err != nil {
+		//			logs.Infof("Error: %s", err)
+		//			w.WriteHeader(http.StatusInternalServerError)
+		//			errChan <- err
+		//			return
+		//		}
+		//	}
+		//
+		//	if err := AccountData(w, account); err != nil {
+		//		logs.Infof("Error: %s", err)
+		//		w.WriteHeader(http.StatusInternalServerError)
+		//		errChan <- err
+		//		return
+		//	}
+		//})
 		r.Delete("/", func(w http.ResponseWriter, r *http.Request) {
+			accessToken := r.Header.Get("X-User-Access-Token")
+			if accessToken == "" {
+				logs.Info("No Access Token")
+				w.WriteHeader(http.StatusUnauthorized)
+				return
+			}
+
 			subject := r.Header.Get("X-User-Subject")
 			if subject == "" {
 				logs.Info("No Subject")
@@ -125,9 +132,39 @@ func startHTTP(cfg *config.Config, errChan chan error) {
 				return
 			}
 
-			logs.Local().Infof("Subject: %s", r.Header.Get("X-User-Subject"))
-			w.Header().Set("debug", "delete account")
-			logs.Local().Info("Delete account")
+			v, err := validate.NewValidate(r.Context(), cfg.Services.Identity, cfg.Local.Development).GetClient()
+			if err != nil {
+				logs.Infof("validate client err: %s", err)
+				w.WriteHeader(http.StatusInternalServerError)
+				return
+			}
+
+			valid, err := v.ValidateUser(accessToken, subject)
+			if err != nil {
+				logs.Infof("validate user err: %s", err)
+				w.WriteHeader(http.StatusInternalServerError)
+				return
+			}
+			if !valid {
+				logs.Info("invalid user")
+				w.WriteHeader(http.StatusUnauthorized)
+				return
+			}
+
+			a, err := api.NewAccountService(r.Context(), *cfg, subject, accessToken).GetClient()
+			if err != nil {
+				logs.Infof("Error Get Account Client: %s", err)
+				w.WriteHeader(http.StatusInternalServerError)
+				return
+			}
+
+			if err := a.DeleteAccount(); err != nil {
+				logs.Infof("Error Delete Account: %s", err)
+				w.WriteHeader(http.StatusInternalServerError)
+				return
+			}
+
+			w.WriteHeader(http.StatusOK)
 		})
 	})
 
