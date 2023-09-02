@@ -197,7 +197,7 @@ func startHTTP(cfg *config.Config, errChan chan error) {
 				return
 			}
 			if !valid {
-				logs.Info("invalid user")
+				logs.Infof("invalid user: %+v", r.Header)
 				w.WriteHeader(http.StatusUnauthorized)
 				return
 			}
