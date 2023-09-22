@@ -14,7 +14,7 @@ require (
 	github.com/todo-lists-app/go-validate-user v0.1.0
 	github.com/todo-lists-app/protobufs v0.1.2
 	go.mongodb.org/mongo-driver v1.12.1
-	google.golang.org/grpc v1.58.1
+	google.golang.org/grpc v1.58.2
 )
 
 require (
