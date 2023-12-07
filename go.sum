@@ -69,8 +69,6 @@ github.com/keloran/go-probe v1.0.0/go.mod h1:S+6U1pcDDDDgyKkdgw9phD1obn1uHbAn4ES
 github.com/keloran/vault-helper v0.8.1 h1:mRVAfpzNTUFHNU+em9EMQWU95hsnoAVYBxVIgChdlJs=
 github.com/keloran/vault-helper v0.8.1/go.mod h1:JZ/puuBd4+dWYZOeVEA7SgzbQS2VyYJibWte6q1h8Mk=
 github.com/klauspost/compress v1.13.6/go.mod h1:/3/Vjq9QcHkK5uEr5lBEmyoZ1iFhe47etQ6QUkpK6sk=
-github.com/klauspost/compress v1.17.3 h1:qkRjuerhUU1EmXLYGkSH6EZL+vPSxIrYjLNAK4slzwA=
-github.com/klauspost/compress v1.17.3/go.mod h1:/dCuZOvVtNoHsyb+cuJD3itjs3NbnF6KH9zAO4BDxPM=
 github.com/klauspost/compress v1.17.4 h1:Ej5ixsIri7BrIjBkRZLTo6ghwrEtHFk7ijlczPW4fZ4=
 github.com/klauspost/compress v1.17.4/go.mod h1:/dCuZOvVtNoHsyb+cuJD3itjs3NbnF6KH9zAO4BDxPM=
 github.com/mattn/go-colorable v0.1.6 h1:6Su7aK7lXmJ/U79bYtBjLNaha4Fs1Rg9plHpcH+vvnE=
@@ -101,8 +99,8 @@ github.com/stretchr/testify v1.8.2/go.mod h1:w2LPCIKwWwSfY2zedu0+kehJoqGctiVI29o
 github.com/stretchr/testify v1.8.3/go.mod h1:sz/lmYIOXD/1dqDmKjjqLyZ2RngseejIcXlSw2iwfAo=
 github.com/stretchr/testify v1.8.4 h1:CcVxjf3Q8PM0mHUKJCdn+eZZtm5yQwehR5yeSVQQcUk=
 github.com/stretchr/testify v1.8.4/go.mod h1:sz/lmYIOXD/1dqDmKjjqLyZ2RngseejIcXlSw2iwfAo=
-github.com/todo-lists-app/go-validate-user v0.1.1 h1:Q3e6FZXSJGHSeN7+z7LmPec3lbGez1SOXb+lZ9lVCKM=
-github.com/todo-lists-app/go-validate-user v0.1.1/go.mod h1:7fk+WvgWoCQNiDa+K0LAv9Am/qZb8JvW5NyJ0KeVULA=
+github.com/todo-lists-app/go-validate-user v0.1.2 h1:w5obHaEGCGyytY1wdmYJI0TVvSFsbxku1tslv44aBKc=
+github.com/todo-lists-app/go-validate-user v0.1.2/go.mod h1:QkfMmc13Js9tDZ6TNPlOrqA1c8dDqKeuiYMKwZsuCVU=
 github.com/todo-lists-app/protobufs v0.1.2 h1:ruTiVHi6KobYDChw4AKyRGB95YIfDCIo6altlCT3YoI=
 github.com/todo-lists-app/protobufs v0.1.2/go.mod h1:++aQjX2RgYmrKu32JKXipEG1H2vu/bqMTCdR03ZPrPM=
 github.com/xdg-go/pbkdf2 v1.0.0 h1:Su7DPu48wXMwC3bs7MCNG+z4FhcyEuz5dlvchbq0B0c=
@@ -176,8 +174,6 @@ golang.org/x/tools v0.1.12/go.mod h1:hNGJHUnrk76NpqgfD5Aqm5Crs+Hm0VOH/i9J2+nxYbc
 golang.org/x/tools v0.6.0/go.mod h1:Xwgl3UAJ/d3gWutnCtw505GrjyAbvKui8lOU390QaIU=
 golang.org/x/xerrors v0.0.0-20190717185122-a985d3407aa7/go.mod h1:I/5z698sn9Ka8TeJc9MKroUUfqBBauWjQqLJ2OPfmY0=
 golang.org/x/xerrors v0.0.0-20191204190536-9bdfabe68543/go.mod h1:I/5z698sn9Ka8TeJc9MKroUUfqBBauWjQqLJ2OPfmY0=
-google.golang.org/genproto/googleapis/rpc v0.0.0-20231120223509-83a465c0220f h1:ultW7fxlIvee4HYrtnaRPon9HpEgFk5zYpmfMgtKB5I=
-google.golang.org/genproto/googleapis/rpc v0.0.0-20231120223509-83a465c0220f/go.mod h1:L9KNLi232K1/xB6f7AlSX692koaRnKaWSR0stBki0Yc=
 google.golang.org/genproto/googleapis/rpc v0.0.0-20231127180814-3a041ad873d4 h1:DC7wcm+i+P1rN3Ff07vL+OndGg5OhNddHyTA+ocPqYE=
 google.golang.org/genproto/googleapis/rpc v0.0.0-20231127180814-3a041ad873d4/go.mod h1:eJVxU6o+4G1PSczBr85xmyvSNYAKvAYgkub40YGomFM=
 google.golang.org/grpc v1.59.0 h1:Z5Iec2pjwb+LEOqzpB2MR12/eKFhDPhuqW91O+4bwUk=
