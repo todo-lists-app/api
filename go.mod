@@ -1,6 +1,7 @@
 module github.com/todo-lists-app/todo-lists-api
 
 go 1.21
+toolchain go1.22.0
 
 require (
 	github.com/bugfixes/go-bugfixes v0.10.0
@@ -8,7 +9,7 @@ require (
 	github.com/go-chi/chi/v5 v5.0.12
 	github.com/go-chi/cors v1.2.1
 	github.com/keloran/go-config v0.5.1
-	github.com/keloran/go-healthcheck v1.2.1
+	github.com/keloran/go-healthcheck v1.2.2
 	github.com/keloran/go-probe v1.0.0
 	github.com/stretchr/testify v1.9.0
 	github.com/todo-lists-app/go-validate-user v0.1.2
