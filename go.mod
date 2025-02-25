@@ -13,7 +13,7 @@ require (
 	github.com/stretchr/testify v1.10.0
 	github.com/todo-lists-app/go-validate-user v0.1.2
 	github.com/todo-lists-app/protobufs v0.1.2
-	go.mongodb.org/mongo-driver v1.17.2
+	go.mongodb.org/mongo-driver v1.17.3
 	google.golang.org/grpc v1.67.1
 )
 
