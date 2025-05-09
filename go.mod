@@ -14,7 +14,7 @@ require (
 	github.com/todo-lists-app/go-validate-user v0.1.2
 	github.com/todo-lists-app/protobufs v0.1.2
 	go.mongodb.org/mongo-driver v1.17.3
-	google.golang.org/grpc v1.67.1
+	google.golang.org/grpc v1.72.0
 )
 
 require (
@@ -65,7 +65,7 @@ require (
 	golang.org/x/sys v0.33.0 // indirect
 	golang.org/x/text v0.25.0 // indirect
 	golang.org/x/time v0.11.0 // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20240814211410-ddb44dafa142 // indirect
-	google.golang.org/protobuf v1.34.2 // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20250218202821-56aae31c358a // indirect
+	google.golang.org/protobuf v1.36.5 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
