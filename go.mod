@@ -7,7 +7,7 @@ require (
 	github.com/caarlos0/env/v8 v8.0.0
 	github.com/go-chi/chi/v5 v5.2.1
 	github.com/go-chi/cors v1.2.1
-	github.com/keloran/go-config v1.5.8
+	github.com/keloran/go-config v1.6.1
 	github.com/keloran/go-healthcheck v1.2.1
 	github.com/keloran/go-probe v1.0.0
 	github.com/stretchr/testify v1.10.0
@@ -40,7 +40,7 @@ require (
 	github.com/hashicorp/vault/api v1.16.0 // indirect
 	github.com/jackc/pgpassfile v1.0.0 // indirect
 	github.com/jackc/pgservicefile v0.0.0-20240606120523-5a60cdf6a761 // indirect
-	github.com/jackc/pgx/v5 v5.7.4 // indirect
+	github.com/jackc/pgx/v5 v5.7.5 // indirect
 	github.com/jackc/puddle/v2 v2.2.2 // indirect
 	github.com/keloran/vault-helper v1.1.0 // indirect
 	github.com/klauspost/compress v1.18.0 // indirect
@@ -51,6 +51,7 @@ require (
 	github.com/opentracing/opentracing-go v1.2.0 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
+	github.com/rogpeppe/go-internal v1.14.1 // indirect
 	github.com/ryanuber/go-glob v1.0.0 // indirect
 	github.com/segmentio/ksuid v1.0.4 // indirect
 	github.com/stretchr/objx v0.5.2 // indirect
